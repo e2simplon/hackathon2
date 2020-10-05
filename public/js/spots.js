@@ -99358,7 +99358,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
-var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store(_store_spots__WEBPACK_IMPORTED_MODULE_3__["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -99378,7 +99377,7 @@ Vue.component('spots', __webpack_require__(/*! ./components/spots.vue */ "./reso
 
 var app = new Vue({
   el: '#app',
-  store: store,
+  store: _store_spots__WEBPACK_IMPORTED_MODULE_3__["default"],
   vuetify: _vuetify__WEBPACK_IMPORTED_MODULE_1__["default"],
   _: lodash__WEBPACK_IMPORTED_MODULE_4___default.a,
   router: _router_spots__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -99395,12 +99394,17 @@ var app = new Vue({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {},
-  getters: {},
-  actions: {},
-  mutations: {}
-});
+  mutations: {},
+  actions: {}
+}));
 
 /***/ }),
 
