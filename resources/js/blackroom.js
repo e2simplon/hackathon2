@@ -7,12 +7,35 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-import Vuex from 'vuex'
 import vuetify from './vuetify'
-Vue.use(Vuex)
 import store from "./store/blackroom"
+import axios from "axios";
+import router from './router/blackroom'
 
+
+axios.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response.status === 422) {
+            store.commit("setErrors", error.response.data.errors);
+        } else if (error.response.status === 401) {
+            store.commit("killToken", null);
+            router.push({ name: "Login" });
+        } else {
+            return Promise.reject(error);
+        }
+    }
+);
+
+axios.interceptors.request.use(function(config) {
+    config.headers.common = {
+        Authorization: `Bearer ${store.state.authToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+    };
+
+    return config;
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,5 +59,6 @@ Vue.component('blackroom', require('./components/blackroom.vue').default);
 const app = new Vue({
     el: '#app',
     store,
-    vuetify
+    vuetify,
+    router
 });
