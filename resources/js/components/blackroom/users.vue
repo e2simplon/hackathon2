@@ -107,7 +107,7 @@
 
                     <template v-for="(user, index) in $store.state.users">
                     <v-list-item two-line
-                                 :key="index"
+                                 :key="user.id + '-user'"
                     >
                         <v-list-item-icon>
                             <v-icon>account_balance</v-icon>

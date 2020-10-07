@@ -58,7 +58,7 @@
         <template v-for="(spot, index) in $store.state.spots">
         <v-list-item two-line
 
-            :key="index"
+            :key="spot.id + '-spot'"
         >
             <v-list-item-icon>
                 <v-icon>account_balance</v-icon>

@@ -9,7 +9,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         spots: [],
-        users: []
+        users: [],
+        snack: {color:"success", text:"no text", status: false}
     },
     mutations: {
         setSpotsData(state, payload) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
         },
         setUsersData(state, payload) {
             state.users = payload;
+        },
+        snackMessage(state, payload) {
+            state.snack = payload;
         },
     },
     actions: {
@@ -27,6 +31,7 @@ export default new Vuex.Store({
             axios.post(window.location.origin + "/api/spots", payload)
                 .then(response => {
                     commit("setSpotsData", response.data);
+                    commit("snackMessage", {color:"success", text:"Plateau ajouté", status: true});
                 }).catch(error => {
             });
         },
@@ -37,6 +42,7 @@ export default new Vuex.Store({
             axios.post(window.location.origin + "/api/users", payload)
                 .then(response => {
                     commit("setUsersData", response.data);
+                    commit("snackMessage", {color:"success", text:"Utilisateur ajouté", status: true});
                 }).catch(error => {
             });
         },

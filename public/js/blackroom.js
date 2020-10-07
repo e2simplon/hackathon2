@@ -2001,6 +2001,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "admin",
   data: function data() {
@@ -38778,6 +38787,25 @@ var render = function() {
     "div",
     [
       _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: "3000", color: _vm.$store.state.snack.color },
+          model: {
+            value: _vm.$store.state.snack.status,
+            callback: function($$v) {
+              _vm.$set(_vm.$store.state.snack, "status", $$v)
+            },
+            expression: "$store.state.snack.status"
+          }
+        },
+        [
+          _c("strong", [
+            _vm._v(" " + _vm._s(_vm.$store.state.snack.text) + " ")
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
         "v-navigation-drawer",
         {
           attrs: {
@@ -38824,7 +38852,9 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-list-item-title", [_vm._v("UTILISATEURS")])
+                      _c("v-list-item-title", [
+                        _c("strong", [_vm._v("UTILISATEURS")])
+                      ])
                     ],
                     1
                   ),
@@ -38846,7 +38876,9 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-list-item-title", [_vm._v("PLATEAUX")])
+                      _c("v-list-item-title", [
+                        _c("strong", [_vm._v("PLATEAUX")])
+                      ])
                     ],
                     1
                   ),
@@ -38869,7 +38901,9 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-list-item-title", [_vm._v("PROJETS")])
+                      _c("v-list-item-title", [
+                        _c("strong", [_vm._v("PROJETS")])
+                      ])
                     ],
                     1
                   )
@@ -39292,7 +39326,7 @@ var render = function() {
                     return [
                       _c(
                         "v-list-item",
-                        { key: index, attrs: { "two-line": "" } },
+                        { key: spot.id + "-spot", attrs: { "two-line": "" } },
                         [
                           _c(
                             "v-list-item-icon",
@@ -39634,7 +39668,7 @@ var render = function() {
                     return [
                       _c(
                         "v-list-item",
-                        { key: index, attrs: { "two-line": "" } },
+                        { key: user.id + "-user", attrs: { "two-line": "" } },
                         [
                           _c(
                             "v-list-item-icon",
@@ -100810,7 +100844,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     spots: [],
-    users: []
+    users: [],
+    snack: {
+      color: "success",
+      text: "no text",
+      status: false
+    }
   },
   mutations: {
     setSpotsData: function setSpotsData(state, payload) {
@@ -100818,6 +100857,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     setUsersData: function setUsersData(state, payload) {
       state.users = payload;
+    },
+    snackMessage: function snackMessage(state, payload) {
+      state.snack = payload;
     }
   },
   actions: {
@@ -100829,6 +100871,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var commit = _ref2.commit;
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(window.location.origin + "/api/spots", payload).then(function (response) {
         commit("setSpotsData", response.data);
+        commit("snackMessage", {
+          color: "success",
+          text: "Plateau ajouté",
+          status: true
+        });
       })["catch"](function (error) {});
     },
     setUsers: function setUsers(_ref3, payload) {
@@ -100839,6 +100886,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var commit = _ref4.commit;
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(window.location.origin + "/api/users", payload).then(function (response) {
         commit("setUsersData", response.data);
+        commit("snackMessage", {
+          color: "success",
+          text: "Utilisateur ajouté",
+          status: true
+        });
       })["catch"](function (error) {});
     }
   }

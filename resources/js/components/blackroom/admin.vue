@@ -1,5 +1,14 @@
 <template>
     <div>
+        <v-snackbar
+            v-model="$store.state.snack.status"
+            timeout="3000"
+            :color="$store.state.snack.color"
+        >
+           <strong> {{ $store.state.snack.text}} </strong>
+
+        </v-snackbar>
+
         <v-navigation-drawer
             color="#C90F54"
             permanent
@@ -21,20 +30,20 @@
                         <v-list-item-icon>
                             <v-icon>account_box</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title>UTILISATEURS</v-list-item-title>
+                        <v-list-item-title><strong>UTILISATEURS</strong></v-list-item-title>
                     </v-list-item>
 
                     <v-list-item @click="goToRoute('spots')">
                         <v-list-item-icon name="sdf">
                             <v-icon>account_balance</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title>PLATEAUX</v-list-item-title>
+                        <v-list-item-title><strong>PLATEAUX</strong></v-list-item-title>
                     </v-list-item>
                     <v-list-item h @click="goToRoute('projects')">
                         <v-list-item-icon name="sdf">
                             <v-icon>construction</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title>PROJETS</v-list-item-title>
+                        <v-list-item-title><strong>PROJETS</strong></v-list-item-title>
                     </v-list-item>
 
                 </v-list-item-group>
