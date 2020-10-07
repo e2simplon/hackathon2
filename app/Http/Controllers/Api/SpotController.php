@@ -15,7 +15,7 @@ class SpotController extends Controller
      */
     public function index()
     {
-        return Spot::all();
+       return Spot::orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -26,7 +26,11 @@ class SpotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $Spot = new Spot();
+        $Spot->name = $request->name;
+        $Spot->slug =$request->slug;
+        $Spot->save();
+        return Spot::orderBy('id', 'DESC')->get();
     }
 
     /**

@@ -2139,8 +2139,113 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "spots.vue"
+  name: "spots.vue",
+  data: function data() {
+    return {
+      valid: false,
+      name: "",
+      slug: "",
+      nameRules: [function (v) {
+        return !!v || 'Le nom est obligatoire';
+      }],
+      slugRules: [function (v) {
+        return !!v || 'Le slug est obligatoire';
+      }]
+    };
+  },
+  methods: {
+    addSpot: function addSpot() {
+      this.$store.dispatch('addSpot', {
+        name: this.name,
+        slug: this.slug
+      });
+      this.$refs.spotForm.reset();
+    }
+  }
 });
 
 /***/ }),
@@ -6747,7 +6852,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity 0.3s\n}\n.fade-enter, .fade-leave-active {\n    opacity: 0\n}\n", ""]);
+exports.push([module.i, "\n.fade-enter-active, .fade-leave-active {\n    transition: opacity 0.3s\n}\n.fade-enter, .fade-leave-active {\n    opacity: 0\n}\n\n", ""]);
 
 // exports
 
@@ -38544,6 +38649,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-app",
+    { staticStyle: { "background-color": "#e4e4e4" } },
     [
       _c(
         "transition",
@@ -38924,10 +39030,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&scoped=true&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&scoped=true& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e& ***!
+  \******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38939,7 +39045,228 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Gestion des plateaux")])
+  return _c(
+    "div",
+    { staticStyle: { "padding-left": "50px", "padding-right": "50px" } },
+    [
+      _c("h1", { staticStyle: { "margin-bottom": "20px" } }, [
+        _vm._v("Gestion des plateaux")
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { attrs: { width: "100%" } },
+        [
+          _c(
+            "v-card-title",
+            [
+              _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
+                _vm._v(
+                  "\n                    add_circle_outline\n                "
+                )
+              ]),
+              _vm._v("\n                 Ajouter un plateau\n            ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-form",
+            {
+              ref: "spotForm",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addSpot()
+                }
+              },
+              model: {
+                value: _vm.valid,
+                callback: function($$v) {
+                  _vm.valid = $$v
+                },
+                expression: "valid"
+              }
+            },
+            [
+              _c(
+                "v-card-text",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      id: "name",
+                      "prepend-icon": "account_balance",
+                      name: "name",
+                      label: "Nom du plateau",
+                      color: "#e91f62",
+                      rules: _vm.nameRules,
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.name,
+                      callback: function($$v) {
+                        _vm.name = $$v
+                      },
+                      expression: "name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      id: "slug",
+                      "prepend-icon": "link",
+                      name: "slug",
+                      label: "slug",
+                      color: "#e91f62",
+                      rules: _vm.slugRules,
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.slug,
+                      callback: function($$v) {
+                        _vm.slug = $$v
+                      },
+                      expression: "slug"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                { staticStyle: { padding: "20px" } },
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text",
+                      attrs: {
+                        color: "#e91f62",
+                        type: "submit",
+                        "x-large": "",
+                        disabled: !_vm.valid
+                      }
+                    },
+                    [
+                      _vm._v(
+                        " Enregistrer\n                        le plateau\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "h1",
+        { staticStyle: { "margin-bottom": "20px", "margin-top": "40px" } },
+        [_vm._v("Liste des plateaux")]
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { attrs: { width: "100%" } },
+        [
+          _c(
+            "v-card-title",
+            [
+              _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
+                _vm._v(
+                  "\n                    account_balance\n                "
+                )
+              ]),
+              _vm._v("\n                 Liste des plateaux\n            ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list",
+            [
+              _c(
+                "v-list-item-group",
+                _vm._l(_vm.$store.state.spots, function(spot, i) {
+                  return _c(
+                    "v-list-item",
+                    { key: spot.id, attrs: { "two-line": "" } },
+                    [
+                      _c(
+                        "v-list-item-icon",
+                        [_c("v-icon", [_vm._v("account_balance")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [
+                          _c("v-list-item-title", {
+                            domProps: { textContent: _vm._s(spot.name) }
+                          }),
+                          _vm._v(" "),
+                          _c("v-list-item-subtitle", {
+                            domProps: { textContent: _vm._s(spot.slug) }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-list-item-action", [
+                        _c(
+                          "div",
+                          [
+                            _c(
+                              "v-btn",
+                              { attrs: { icon: "" } },
+                              [
+                                _c(
+                                  "v-icon",
+                                  { attrs: { color: "grey lighten-1" } },
+                                  [_vm._v("create")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              { attrs: { icon: "" } },
+                              [
+                                _c(
+                                  "v-icon",
+                                  { attrs: { color: "grey lighten-1" } },
+                                  [_vm._v("delete")]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                }),
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -99510,6 +99837,10 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.interceptors.request.use(function (
   };
   return config;
 });
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(window.location.origin + "/api/spots").then(function (response) {
+  // console.log(response);
+  _store_blackroom__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('setSpots', response.data);
+})["catch"](function (error) {});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -99953,7 +100284,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _spots_vue_vue_type_template_id_740afd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./spots.vue?vue&type=template&id=740afd7e&scoped=true& */ "./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&scoped=true&");
+/* harmony import */ var _spots_vue_vue_type_template_id_740afd7e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./spots.vue?vue&type=template&id=740afd7e& */ "./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&");
 /* harmony import */ var _spots_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spots.vue?vue&type=script&lang=js& */ "./resources/js/components/blackroom/spots.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -99965,11 +100296,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _spots_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _spots_vue_vue_type_template_id_740afd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _spots_vue_vue_type_template_id_740afd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _spots_vue_vue_type_template_id_740afd7e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _spots_vue_vue_type_template_id_740afd7e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "740afd7e",
+  null,
   null
   
 )
@@ -99995,19 +100326,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&scoped=true&":
-/*!************************************************************************************************!*\
-  !*** ./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&scoped=true& ***!
-  \************************************************************************************************/
+/***/ "./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e& ***!
+  \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spots_vue_vue_type_template_id_740afd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./spots.vue?vue&type=template&id=740afd7e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spots_vue_vue_type_template_id_740afd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spots_vue_vue_type_template_id_740afd7e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./spots.vue?vue&type=template&id=740afd7e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/spots.vue?vue&type=template&id=740afd7e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spots_vue_vue_type_template_id_740afd7e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spots_vue_vue_type_template_id_740afd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spots_vue_vue_type_template_id_740afd7e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -100176,14 +100507,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _router_blackroom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../router/blackroom */ "./resources/js/router/blackroom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  state: {},
-  mutations: {},
-  actions: {}
+  state: {
+    spots: []
+  },
+  mutations: {
+    setSpotsData: function setSpotsData(state, payload) {
+      state.spots = payload;
+    }
+  },
+  actions: {
+    setSpots: function setSpots(_ref, payload) {
+      var commit = _ref.commit;
+      commit("setSpotsData", payload);
+    },
+    addSpot: function addSpot(_ref2, payload) {
+      var commit = _ref2.commit;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(window.location.origin + "/api/spots", payload).then(function (response) {
+        commit("setSpotsData", response.data);
+      })["catch"](function (error) {});
+    }
+  }
 }));
 
 /***/ }),

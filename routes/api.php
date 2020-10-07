@@ -18,6 +18,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
 
     Route::post('login', 'LoginController@login')->name('login');
     Route::get('spots', 'SpotController@index')->name('getSpots');
+    Route::post('spots', 'SpotController@store')->name('addSpot');
 
     Route::post('register', 'RegisterController@register')->name('register');
 

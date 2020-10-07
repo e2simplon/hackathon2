@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app style="background-color:#e4e4e4;">
         <transition name="fade" mode="out-in" appear>
 <router-view></router-view>
             </transition>
@@ -22,5 +22,6 @@
     .fade-enter, .fade-leave-active {
         opacity: 0
     }
+
 </style>
 
