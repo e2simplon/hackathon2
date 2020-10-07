@@ -6,11 +6,11 @@
             <v-card-title>
                 <v-icon  x-large
                  color="black">
-                    account_box
+                    add_circle_outline
                 </v-icon>
                  &nbsp;Ajouter un utilisateur
             </v-card-title>
-            <v-form @submit.prevent="addJudge()" v-model="valid">
+            <v-form @submit.prevent="addUser()" v-model="valid"  ref="userForm">
                 <v-card-text>
 
                     <v-text-field
@@ -25,7 +25,7 @@
 
                     <v-select
                         v-model="spot_id"
-                        :items="spots"
+                        :items="$store.state.spots"
                         item-text="name"
                         item-value="id"
                         id="spot_id"
@@ -46,25 +46,31 @@
                                   color="#e91f62"
                                   v-model="email"
                                   :rules="emailRules"
-                                  background-color="white"
                                   required></v-text-field>
+
                     <v-text-field id="password"
                                   prepend-icon="vpn_key"
                                   name="password"
                                   label="Mot de passe"
-                                  type="text"
+                                  type="password"
                                   color="#e91f62"
                                   v-model="password"
                                   :rules="passwordRules"
-                                  background-color="white"
+                                  :append-icon="showPass ? 'visibility' : 'visibility_off'"
+                                  :type="showPass ? 'text' : 'password'"
+                                  @click:append="showPass = !showPass"
+                                  class="input-group--focused"
                                   required></v-text-field>
+
+
+
+
                     <v-row>
                     <v-col style="width:200px;">
                         <v-switch
-                            v-model="id_admin"
+                            v-model="is_admin"
                             label="Administrateur"
                             color="#C90F54"
-                            value="#C90F54"
                             hide-details
                         ></v-switch>
                     </v-col>
@@ -73,13 +79,10 @@
                             v-model="is_judge"
                             label="Juge"
                             color="#C90F54"
-                            value="#C90F54"
                             hide-details
                         ></v-switch>
                     </v-col>
                         </v-row>
-
-
 
                 </v-card-text>
                 <v-card-actions style="padding:20px;">
@@ -89,6 +92,74 @@
                 </v-card-actions>
             </v-form>
         </v-card>
+
+        <v-card width="100%" style="margin-top:30px;">
+            <v-card-title>
+                <v-icon x-large
+                        color="black">
+                    account_box
+                </v-icon>
+                &nbsp;Liste des utilisateurs
+            </v-card-title>
+            <v-list>
+                <v-list-item-group
+                >
+
+                    <template v-for="(user, index) in $store.state.users">
+                    <v-list-item two-line
+                                 :key="index"
+                    >
+                        <v-list-item-icon>
+                            <v-icon>account_balance</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title><strong> {{ user.name }} </strong><v-chip
+                                class="ma-2" v-show="user.is_admin"
+                            >
+                                administrateur
+                                <v-icon right>
+                                    security
+                                </v-icon>
+                            </v-chip>
+                                <v-chip
+                                    class="ma-2"  v-show="user.is_judge"
+                                >
+                                    juge<v-icon right>
+                                        gavel
+                                    </v-icon>
+                                </v-chip>
+                                <v-chip
+                                    class="ma-2"
+                                    color="pink"
+                                    label
+                                    text-color="white"
+                                ><v-icon left>
+                                    account_balance
+                                </v-icon>
+                                    {{getSpot(user.spot_id)}}
+                                </v-chip></v-list-item-title>
+                            <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-action>
+                            <div>
+                                <v-btn icon>
+                                    <v-icon color="grey lighten-1">create</v-icon>
+                                </v-btn>
+                                <v-btn icon>
+                                    <v-icon color="grey lighten-1">delete</v-icon>
+                                </v-btn>
+                            </div>
+                        </v-list-item-action>
+
+                    </v-list-item>
+                    <v-divider
+                        v-if="index < $store.state.users.length - 1"
+                        :key="index"
+                    ></v-divider>
+                    </template>
+                </v-list-item-group>
+            </v-list>
+        </v-card>
     </div>
 </template>
 
@@ -97,13 +168,14 @@
         name: "users.vue",
         data: function () {
             return {
+                showPass: false,
+                valid:false,
                 name: "",
                 email: "",
                 password: "",
-                is_judge:0,
-                is_admin:0,
-                spot_id: 0,
-                spots: [{id: 1, name: 'Quai alpha'}, {id: 2, name: 'Pôle e-tourisme'}, {id: 3, name: 'Pôle image'}],
+                is_judge:true,
+                is_admin:false,
+                spot_id: "",
                 nameRules: [
                     v => !!v || 'Le nom est obligatoire',
                 ],
@@ -118,6 +190,15 @@
                 ],
             }
         },
+        methods: {
+            addUser: function() {
+                this.$store.dispatch('addUser', {name: this.name, email: this.email, password:this.password, is_judge:this.is_judge,  is_admin:this.is_admin, spot_id:this.spot_id});
+                this.$refs.userForm.reset();
+            },
+            getSpot: function (spotId) {
+                return this.$store.state.spots.find( spot => spot.id === spotId).name;
+            }
+        }
     }
 </script>
 

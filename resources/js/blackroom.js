@@ -46,6 +46,15 @@ axios.get(window.location.origin + "/api/spots")
     }).catch(error => {
 });
 
+axios.get(window.location.origin + "/api/users")
+    .then(response => {
+        // console.log(response);
+        store.dispatch('setUsers', response.data);
+
+
+    }).catch(error => {
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

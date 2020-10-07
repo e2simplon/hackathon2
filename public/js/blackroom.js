@@ -2034,6 +2034,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "general"
 });
@@ -2135,6 +2140,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2353,26 +2363,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "users.vue",
   data: function data() {
     return {
+      showPass: false,
+      valid: false,
       name: "",
       email: "",
       password: "",
-      is_judge: 0,
-      is_admin: 0,
-      spot_id: 0,
-      spots: [{
-        id: 1,
-        name: 'Quai alpha'
-      }, {
-        id: 2,
-        name: 'Pôle e-tourisme'
-      }, {
-        id: 3,
-        name: 'Pôle image'
-      }],
+      is_judge: true,
+      is_admin: false,
+      spot_id: "",
       nameRules: [function (v) {
         return !!v || 'Le nom est obligatoire';
       }],
@@ -2386,6 +2459,24 @@ __webpack_require__.r(__webpack_exports__);
         return !!v || 'Ce champ est obligatoire';
       }]
     };
+  },
+  methods: {
+    addUser: function addUser() {
+      this.$store.dispatch('addUser', {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        is_judge: this.is_judge,
+        is_admin: this.is_admin,
+        spot_id: this.spot_id
+      });
+      this.$refs.userForm.reset();
+    },
+    getSpot: function getSpot(spotId) {
+      return this.$store.state.spots.find(function (spot) {
+        return spot.id === spotId;
+      }).name;
+    }
   }
 });
 
@@ -38867,11 +38958,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v(
-      "\nsdsgf sdfsd sf fsdfsdfsdfsdfsdfsdf sdfsdf sdfsdfsdf s fsdfsdfsfsfsd sfsfsf sfsfdsdfsdfsdf sdf sd fsdfsd fsdfsdfsdfsdfsdfsdfsdfsdfsdfsfsdfs fsfsdf\n    "
-    )
-  ])
+  return _c(
+    "v-row",
+    { staticClass: "full-height" },
+    [
+      _c("v-col", { attrs: { align: "center", justify: "center" } }, [
+        _c("img", {
+          staticStyle: { "margin-top": "200px" },
+          attrs: { src: "/img/logo-qa.svg", width: "400" }
+        })
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39167,14 +39266,8 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "h1",
-        { staticStyle: { "margin-bottom": "20px", "margin-top": "40px" } },
-        [_vm._v("Liste des plateaux")]
-      ),
-      _vm._v(" "),
-      _c(
         "v-card",
-        { attrs: { width: "100%" } },
+        { staticStyle: { "margin-top": "30px" }, attrs: { width: "100%" } },
         [
           _c(
             "v-card-title",
@@ -39194,69 +39287,77 @@ var render = function() {
             [
               _c(
                 "v-list-item-group",
-                _vm._l(_vm.$store.state.spots, function(spot, i) {
-                  return _c(
-                    "v-list-item",
-                    { key: spot.id, attrs: { "two-line": "" } },
-                    [
+                [
+                  _vm._l(_vm.$store.state.spots, function(spot, index) {
+                    return [
                       _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("account_balance")])],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
+                        "v-list-item",
+                        { key: index, attrs: { "two-line": "" } },
                         [
-                          _c("v-list-item-title", {
-                            domProps: { textContent: _vm._s(spot.name) }
-                          }),
+                          _c(
+                            "v-list-item-icon",
+                            [_c("v-icon", [_vm._v("account_balance")])],
+                            1
+                          ),
                           _vm._v(" "),
-                          _c("v-list-item-subtitle", {
-                            domProps: { textContent: _vm._s(spot.slug) }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-list-item-action", [
-                        _c(
-                          "div",
-                          [
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c("v-list-item-title", {
+                                domProps: { textContent: _vm._s(spot.name) }
+                              }),
+                              _vm._v(" "),
+                              _c("v-list-item-subtitle", {
+                                domProps: { textContent: _vm._s(spot.slug) }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-action", [
                             _c(
-                              "v-btn",
-                              { attrs: { icon: "" } },
+                              "div",
                               [
                                 _c(
-                                  "v-icon",
-                                  { attrs: { color: "grey lighten-1" } },
-                                  [_vm._v("create")]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              { attrs: { icon: "" } },
-                              [
+                                  "v-btn",
+                                  { attrs: { icon: "" } },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "grey lighten-1" } },
+                                      [_vm._v("create")]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
                                 _c(
-                                  "v-icon",
-                                  { attrs: { color: "grey lighten-1" } },
-                                  [_vm._v("delete")]
+                                  "v-btn",
+                                  { attrs: { icon: "" } },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "grey lighten-1" } },
+                                      [_vm._v("delete")]
+                                    )
+                                  ],
+                                  1
                                 )
                               ],
                               1
                             )
-                          ],
-                          1
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                }),
-                1
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      index < _vm.$store.state.spots.length - 1
+                        ? _c("v-divider", { key: index })
+                        : _vm._e()
+                    ]
+                  })
+                ],
+                2
               )
             ],
             1
@@ -39306,7 +39407,7 @@ var render = function() {
             "v-card-title",
             [
               _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
-                _vm._v("\n                account_box\n            ")
+                _vm._v("\n                add_circle_outline\n            ")
               ]),
               _vm._v("\n              Ajouter un utilisateur\n        ")
             ],
@@ -39316,10 +39417,11 @@ var render = function() {
           _c(
             "v-form",
             {
+              ref: "userForm",
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.addJudge()
+                  return _vm.addUser()
                 }
               },
               model: {
@@ -39355,7 +39457,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("v-select", {
                     attrs: {
-                      items: _vm.spots,
+                      items: _vm.$store.state.spots,
                       "item-text": "name",
                       "item-value": "id",
                       id: "spot_id",
@@ -39385,7 +39487,6 @@ var render = function() {
                       type: "email",
                       color: "#e91f62",
                       rules: _vm.emailRules,
-                      "background-color": "white",
                       required: ""
                     },
                     model: {
@@ -39398,16 +39499,25 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("v-text-field", {
+                    staticClass: "input-group--focused",
                     attrs: {
                       id: "password",
                       "prepend-icon": "vpn_key",
                       name: "password",
                       label: "Mot de passe",
-                      type: "text",
+                      type: "password",
                       color: "#e91f62",
                       rules: _vm.passwordRules,
-                      "background-color": "white",
+                      "append-icon": _vm.showPass
+                        ? "visibility"
+                        : "visibility_off",
+                      type: _vm.showPass ? "text" : "password",
                       required: ""
+                    },
+                    on: {
+                      "click:append": function($event) {
+                        _vm.showPass = !_vm.showPass
+                      }
                     },
                     model: {
                       value: _vm.password,
@@ -39429,15 +39539,14 @@ var render = function() {
                             attrs: {
                               label: "Administrateur",
                               color: "#C90F54",
-                              value: "#C90F54",
                               "hide-details": ""
                             },
                             model: {
-                              value: _vm.id_admin,
+                              value: _vm.is_admin,
                               callback: function($$v) {
-                                _vm.id_admin = $$v
+                                _vm.is_admin = $$v
                               },
-                              expression: "id_admin"
+                              expression: "is_admin"
                             }
                           })
                         ],
@@ -39451,7 +39560,6 @@ var render = function() {
                             attrs: {
                               label: "Juge",
                               color: "#C90F54",
-                              value: "#C90F54",
                               "hide-details": ""
                             },
                             model: {
@@ -39493,6 +39601,187 @@ var render = function() {
                   )
                 ],
                 1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticStyle: { "margin-top": "30px" }, attrs: { width: "100%" } },
+        [
+          _c(
+            "v-card-title",
+            [
+              _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
+                _vm._v("\n                account_box\n            ")
+              ]),
+              _vm._v("\n             Liste des utilisateurs\n        ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list",
+            [
+              _c(
+                "v-list-item-group",
+                [
+                  _vm._l(_vm.$store.state.users, function(user, index) {
+                    return [
+                      _c(
+                        "v-list-item",
+                        { key: index, attrs: { "two-line": "" } },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [_c("v-icon", [_vm._v("account_balance")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("strong", [
+                                    _vm._v(" " + _vm._s(user.name) + " ")
+                                  ]),
+                                  _c(
+                                    "v-chip",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: user.is_admin,
+                                          expression: "user.is_admin"
+                                        }
+                                      ],
+                                      staticClass: "ma-2"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            administrateur\n                            "
+                                      ),
+                                      _c("v-icon", { attrs: { right: "" } }, [
+                                        _vm._v(
+                                          "\n                                security\n                            "
+                                        )
+                                      ])
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-chip",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: user.is_judge,
+                                          expression: "user.is_judge"
+                                        }
+                                      ],
+                                      staticClass: "ma-2"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                juge"
+                                      ),
+                                      _c("v-icon", { attrs: { right: "" } }, [
+                                        _vm._v(
+                                          "\n                                    gavel\n                                "
+                                        )
+                                      ])
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-chip",
+                                    {
+                                      staticClass: "ma-2",
+                                      attrs: {
+                                        color: "pink",
+                                        label: "",
+                                        "text-color": "white"
+                                      }
+                                    },
+                                    [
+                                      _c("v-icon", { attrs: { left: "" } }, [
+                                        _vm._v(
+                                          "\n                                account_balance\n                            "
+                                        )
+                                      ]),
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(_vm.getSpot(user.spot_id)) +
+                                          "\n                            "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-list-item-subtitle", {
+                                domProps: { textContent: _vm._s(user.email) }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-action", [
+                            _c(
+                              "div",
+                              [
+                                _c(
+                                  "v-btn",
+                                  { attrs: { icon: "" } },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "grey lighten-1" } },
+                                      [_vm._v("create")]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  { attrs: { icon: "" } },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "grey lighten-1" } },
+                                      [_vm._v("delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      index < _vm.$store.state.users.length - 1
+                        ? _c("v-divider", { key: index })
+                        : _vm._e()
+                    ]
+                  })
+                ],
+                2
               )
             ],
             1
@@ -99841,6 +100130,10 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(window.location.origin + "/api/
   // console.log(response);
   _store_blackroom__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('setSpots', response.data);
 })["catch"](function (error) {});
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(window.location.origin + "/api/users").then(function (response) {
+  // console.log(response);
+  _store_blackroom__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('setUsers', response.data);
+})["catch"](function (error) {});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -100516,11 +100809,15 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    spots: []
+    spots: [],
+    users: []
   },
   mutations: {
     setSpotsData: function setSpotsData(state, payload) {
       state.spots = payload;
+    },
+    setUsersData: function setUsersData(state, payload) {
+      state.users = payload;
     }
   },
   actions: {
@@ -100532,6 +100829,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var commit = _ref2.commit;
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(window.location.origin + "/api/spots", payload).then(function (response) {
         commit("setSpotsData", response.data);
+      })["catch"](function (error) {});
+    },
+    setUsers: function setUsers(_ref3, payload) {
+      var commit = _ref3.commit;
+      commit("setUsersData", payload);
+    },
+    addUser: function addUser(_ref4, payload) {
+      var commit = _ref4.commit;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(window.location.origin + "/api/users", payload).then(function (response) {
+        commit("setUsersData", response.data);
       })["catch"](function (error) {});
     }
   }

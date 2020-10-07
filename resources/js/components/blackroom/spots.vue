@@ -44,8 +44,7 @@
                 </v-card-actions>
             </v-form>
         </v-card>
-        <h1 style="margin-bottom:20px;margin-top:40px;">Liste des plateaux</h1>
-        <v-card width="100%">
+        <v-card width="100%" style="margin-top:30px;">
             <v-card-title>
                 <v-icon x-large
                         color="black">
@@ -56,9 +55,10 @@
 <v-list>
     <v-list-item-group
     >
+        <template v-for="(spot, index) in $store.state.spots">
         <v-list-item two-line
-            v-for="(spot, i) in $store.state.spots"
-            :key="spot.id"
+
+            :key="index"
         >
             <v-list-item-icon>
                 <v-icon>account_balance</v-icon>
@@ -79,6 +79,11 @@
             </v-list-item-action>
 
         </v-list-item>
+            <v-divider
+                v-if="index < $store.state.spots.length - 1"
+                :key="index"
+            ></v-divider>
+        </template>
     </v-list-item-group>
 </v-list>
         </v-card>

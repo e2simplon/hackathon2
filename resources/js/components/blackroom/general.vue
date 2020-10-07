@@ -1,7 +1,12 @@
 <template>
-    <div>
-sdsgf sdfsd sf fsdfsdfsdfsdfsdfsdf sdfsdf sdfsdfsdf s fsdfsdfsfsfsd sfsfsf sfsfdsdfsdfsdf sdf sd fsdfsd fsdfsdfsdfsdfsdfsdfsdfsdfsdfsfsdfs fsfsdf
-    </div>
+
+    <v-row  class="full-height">
+        <v-col align="center"
+               justify="center">
+        <img src="/img/logo-qa.svg" width="400" style="margin-top:200px;">
+        </v-col>
+    </v-row>
+
 </template>
 
 <script>
