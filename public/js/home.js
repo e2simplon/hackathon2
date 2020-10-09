@@ -38207,7 +38207,7 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("span", [_vm._v("scoring temps réel cccc")])
+                      _c("span", [_vm._v("scoring temps réel")])
                     ]
                   ),
                   _c("br"),
@@ -38275,7 +38275,7 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("span", [_vm._v("administration générale   hhhhhh")])
+                      _c("span", [_vm._v("administration générale")])
                     ]
                   )
                 ]

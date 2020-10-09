@@ -10,6 +10,7 @@ export default new Vuex.Store({
     state: {
         spots: [],
         users: [],
+        projects: [],
         snack: {color:"success", text:"no text", status: false}
     },
     mutations: {

@@ -8,7 +8,7 @@
                             <svg width="420" height="62">
                                 <rect x="5" y="5" rx="25" fill="none" stroke="white" width="410" height="50"></rect>
                             </svg>
-                            <span>scoring temps réel cccc</span>
+                            <span>scoring temps réel</span>
                         </a><br>
                         <a href="/judges/" class="btn" @mouseover="background = '#ff007f'" @mouseout="background = 'black'">
                             <svg width="420" height="62">
@@ -20,7 +20,7 @@
                             <svg width="420" height="62">
                                 <rect x="5" y="5" rx="25" fill="none" stroke="white" width="410" height="50"></rect>
                             </svg>
-                            <span>administration générale   hhhhhh</span>
+                            <span>administration générale</span>
                         </a>
                     </v-col>
                 </v-row>

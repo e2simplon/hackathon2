@@ -2134,8 +2134,121 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "projects.vue"
+  name: "projects.vue",
+  data: function data() {
+    return {
+      valid: false,
+      name: "",
+      slug: "",
+      nameRules: [function (v) {
+        return !!v || 'Le nom est obligatoire';
+      }],
+      slugRules: [function (v) {
+        return !!v || 'Le slug est obligatoire';
+      }]
+    };
+  },
+  methods: {
+    addProject: function addProject() {
+      this.$store.dispatch('addSpot', {
+        name: this.name,
+        slug: this.slug
+      });
+      this.$refs.projectForm.reset();
+    }
+  }
 });
 
 /***/ }),
@@ -39132,10 +39245,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc& ***!
+  \*********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -39147,16 +39260,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticStyle: { "padding-left": "50px", "padding-right": "50px" } },
+    [
+      _c("h1", { staticStyle: { "margin-bottom": "20px" } }, [
+        _vm._v("Gestion des projets")
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { attrs: { width: "100%" } },
+        [
+          _c(
+            "v-card-title",
+            [
+              _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
+                _vm._v("\n                add_circle_outline\n            ")
+              ]),
+              _vm._v("\n             Ajouter un projet\n        ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-form",
+            {
+              ref: "projectForm",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addProject()
+                }
+              },
+              model: {
+                value: _vm.valid,
+                callback: function($$v) {
+                  _vm.valid = $$v
+                },
+                expression: "valid"
+              }
+            },
+            [
+              _c(
+                "v-card-text",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      id: "name",
+                      "prepend-icon": "construction",
+                      name: "name",
+                      label: "Nom du projet",
+                      color: "#e91f62",
+                      rules: _vm.nameRules,
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.name,
+                      callback: function($$v) {
+                        _vm.name = $$v
+                      },
+                      expression: "name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.$store.state.spots,
+                      "item-text": "name",
+                      "item-value": "id",
+                      id: "spot_id",
+                      "prepend-icon": "account_balance",
+                      name: "spot_id",
+                      type: "text",
+                      color: "#e91f62",
+                      label: "Plateau",
+                      rules: _vm.spotRules,
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.spot_id,
+                      callback: function($$v) {
+                        _vm.spot_id = $$v
+                      },
+                      expression: "spot_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                { staticStyle: { padding: "20px" } },
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text",
+                      attrs: {
+                        color: "#e91f62",
+                        type: "submit",
+                        "x-large": "",
+                        disabled: !_vm.valid
+                      }
+                    },
+                    [
+                      _vm._v(
+                        " Enregistrer\n                    le projet\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticStyle: { "margin-top": "30px" }, attrs: { width: "100%" } },
+        [
+          _c(
+            "v-card-title",
+            [
+              _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
+                _vm._v("\n                account_balance\n            ")
+              ]),
+              _vm._v("\n             Liste des projets\n        ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list",
+            [
+              _c(
+                "v-list-item-group",
+                [
+                  _vm._l(_vm.$store.state.spots, function(spot, index) {
+                    return [
+                      _c(
+                        "v-list-item",
+                        { key: spot.id + "-spot", attrs: { "two-line": "" } },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [_c("v-icon", [_vm._v("account_balance")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c("v-list-item-title", {
+                                domProps: { textContent: _vm._s(spot.name) }
+                              }),
+                              _vm._v(" "),
+                              _c("v-list-item-subtitle", {
+                                domProps: { textContent: _vm._s(spot.slug) }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-action", [
+                            _c(
+                              "div",
+                              [
+                                _c(
+                                  "v-btn",
+                                  { attrs: { icon: "" } },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "grey lighten-1" } },
+                                      [_vm._v("create")]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  { attrs: { icon: "" } },
+                                  [
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "grey lighten-1" } },
+                                      [_vm._v("delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      index < _vm.$store.state.spots.length - 1
+                        ? _c("v-divider", { key: index })
+                        : _vm._e()
+                    ]
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Gestion des projets")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39672,7 +40001,7 @@ var render = function() {
                         [
                           _c(
                             "v-list-item-icon",
-                            [_c("v-icon", [_vm._v("account_balance")])],
+                            [_c("v-icon", [_vm._v("portrait")])],
                             1
                           ),
                           _vm._v(" "),
@@ -100542,7 +100871,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _projects_vue_vue_type_template_id_f76778cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./projects.vue?vue&type=template&id=f76778cc&scoped=true& */ "./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&scoped=true&");
+/* harmony import */ var _projects_vue_vue_type_template_id_f76778cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./projects.vue?vue&type=template&id=f76778cc& */ "./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&");
 /* harmony import */ var _projects_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./projects.vue?vue&type=script&lang=js& */ "./resources/js/components/blackroom/projects.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -100554,11 +100883,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _projects_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _projects_vue_vue_type_template_id_f76778cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _projects_vue_vue_type_template_id_f76778cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _projects_vue_vue_type_template_id_f76778cc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _projects_vue_vue_type_template_id_f76778cc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "f76778cc",
+  null,
   null
   
 )
@@ -100584,19 +100913,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&scoped=true&":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&scoped=true& ***!
-  \***************************************************************************************************/
+/***/ "./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc& ***!
+  \***************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_projects_vue_vue_type_template_id_f76778cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./projects.vue?vue&type=template&id=f76778cc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_projects_vue_vue_type_template_id_f76778cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_projects_vue_vue_type_template_id_f76778cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./projects.vue?vue&type=template&id=f76778cc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/blackroom/projects.vue?vue&type=template&id=f76778cc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_projects_vue_vue_type_template_id_f76778cc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_projects_vue_vue_type_template_id_f76778cc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_projects_vue_vue_type_template_id_f76778cc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -100845,6 +101174,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     spots: [],
     users: [],
+    projects: [],
     snack: {
       color: "success",
       text: "no text",

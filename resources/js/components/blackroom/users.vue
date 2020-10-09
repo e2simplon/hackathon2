@@ -110,7 +110,7 @@
                                  :key="user.id + '-user'"
                     >
                         <v-list-item-icon>
-                            <v-icon>account_balance</v-icon>
+                            <v-icon>portrait</v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
                             <v-list-item-title><strong> {{ user.name }} </strong><v-chip

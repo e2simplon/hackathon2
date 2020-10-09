@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Database\Seeder;
+use App\Spot;
 
 class SpotSeeder extends Seeder
 {
@@ -11,6 +13,25 @@ class SpotSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $spots = [
+            [
+                'name'     => 'Quai Alpha',
+                'slug'    => 'quai-alpha'
+            ],
+            [
+                'name'     => 'Pôle E-tourisme',
+                'slug'    => 'pole-tourisme'
+
+            ],
+            [
+                'name'     => 'Pôle Image',
+                'slug'    => 'pole-image'
+
+            ]
+        ];
+
+        foreach ($spots as $spot) {
+            Spot::create($spot);
+        }
     }
 }
