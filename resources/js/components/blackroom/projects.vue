@@ -37,7 +37,7 @@
                         label="Plateau"
                         :rules="spotRules"
                         required
-                    > </v-select>
+                    ></v-select>
 
 
                 </v-card-text>
@@ -54,24 +54,33 @@
             <v-card-title>
                 <v-icon x-large
                         color="black">
-                    account_balance
+                    construction
                 </v-icon>
                 &nbsp;Liste des projets
             </v-card-title>
             <v-list>
                 <v-list-item-group
                 >
-                    <template v-for="(spot, index) in $store.state.spots">
-                        <v-list-item two-line
-
-                                     :key="spot.id + '-spot'"
+                    <template v-for="(project, index) in $store.state.projects">
+                        <v-list-item
+                                     :key="project.id + '-project'"
                         >
                             <v-list-item-icon>
-                                <v-icon>account_balance</v-icon>
+                                <v-icon>build_circle</v-icon>
                             </v-list-item-icon>
                             <v-list-item-content>
-                                <v-list-item-title v-text="spot.name"></v-list-item-title>
-                                <v-list-item-subtitle v-text="spot.slug"></v-list-item-subtitle>
+                                <v-list-item-title> <strong> {{ project.name }} </strong>
+                                    <v-chip
+                                        class="ma-2"
+                                        color="pink"
+                                        label
+                                        text-color="white"
+                                    ><v-icon left>
+                                        account_balance
+                                    </v-icon>
+                                        {{getSpot(project.spot_id)}}
+                                    </v-chip>
+                                </v-list-item-title>
                             </v-list-item-content>
                             <v-list-item-action>
                                 <div>
@@ -86,7 +95,7 @@
 
                         </v-list-item>
                         <v-divider
-                            v-if="index < $store.state.spots.length - 1"
+                            v-if="index < $store.state.projects.length - 1"
                             :key="index"
                         ></v-divider>
                     </template>
@@ -101,24 +110,25 @@
         name: "projects.vue",
         data: function () {
             return {
-                valid:false,
-                name:"",
-                slug:"",
-
-
+                valid: false,
+                spot_id: "",
+                name: "",
                 nameRules: [
                     v => !!v || 'Le nom est obligatoire',
                 ],
-                slugRules: [
-                    v => !!v || 'Le slug est obligatoire',
+                spotRules: [
+                    v => !!v || 'Un plateau est obligatoire',
                 ],
             }
         },
         methods: {
-            addProject: function() {
+            addProject: function () {
 
-                this.$store.dispatch('addSpot', {name: this.name, slug: this.slug});
+                this.$store.dispatch('addProject', {name: this.name, spot_id: this.spot_id});
                 this.$refs.projectForm.reset();
+            },
+            getSpot: function (spotId) {
+                return this.$store.state.spots.find(spot => spot.id === spotId).name;
             }
         }
     }

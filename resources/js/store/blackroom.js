@@ -20,6 +20,9 @@ export default new Vuex.Store({
         setUsersData(state, payload) {
             state.users = payload;
         },
+        setProjectsData(state, payload) {
+            state.projects = payload;
+        },
         snackMessage(state, payload) {
             state.snack = payload;
         },
@@ -44,6 +47,17 @@ export default new Vuex.Store({
                 .then(response => {
                     commit("setUsersData", response.data);
                     commit("snackMessage", {color:"success", text:"Utilisateur ajouté", status: true});
+                }).catch(error => {
+            });
+        },
+        setProjects({commit}, payload) {
+            commit("setProjectsData", payload);
+        },
+        addProject({commit}, payload) {
+            axios.post(window.location.origin + "/api/projects", payload)
+                .then(response => {
+                    commit("setProjectsData", response.data);
+                    commit("snackMessage", {color:"success", text:"Projet ajouté", status: true});
                 }).catch(error => {
             });
         },

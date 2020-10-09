@@ -55,6 +55,15 @@ axios.get(window.location.origin + "/api/users")
     }).catch(error => {
 });
 
+axios.get(window.location.origin + "/api/projects")
+    .then(response => {
+        // console.log(response);
+        store.dispatch('setProjects', response.data);
+
+
+    }).catch(error => {
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

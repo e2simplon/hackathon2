@@ -2225,28 +2225,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "projects.vue",
   data: function data() {
     return {
       valid: false,
+      spot_id: "",
       name: "",
-      slug: "",
       nameRules: [function (v) {
         return !!v || 'Le nom est obligatoire';
       }],
-      slugRules: [function (v) {
-        return !!v || 'Le slug est obligatoire';
+      spotRules: [function (v) {
+        return !!v || 'Un plateau est obligatoire';
       }]
     };
   },
   methods: {
     addProject: function addProject() {
-      this.$store.dispatch('addSpot', {
+      this.$store.dispatch('addProject', {
         name: this.name,
-        slug: this.slug
+        spot_id: this.spot_id
       });
       this.$refs.projectForm.reset();
+    },
+    getSpot: function getSpot(spotId) {
+      return this.$store.state.spots.find(function (spot) {
+        return spot.id === spotId;
+      }).name;
     }
   }
 });
@@ -39391,7 +39405,7 @@ var render = function() {
             "v-card-title",
             [
               _c("v-icon", { attrs: { "x-large": "", color: "black" } }, [
-                _vm._v("\n                account_balance\n            ")
+                _vm._v("\n                construction\n            ")
               ]),
               _vm._v("\n             Liste des projets\n        ")
             ],
@@ -39404,28 +39418,55 @@ var render = function() {
               _c(
                 "v-list-item-group",
                 [
-                  _vm._l(_vm.$store.state.spots, function(spot, index) {
+                  _vm._l(_vm.$store.state.projects, function(project, index) {
                     return [
                       _c(
                         "v-list-item",
-                        { key: spot.id + "-spot", attrs: { "two-line": "" } },
+                        { key: project.id + "-project" },
                         [
                           _c(
                             "v-list-item-icon",
-                            [_c("v-icon", [_vm._v("account_balance")])],
+                            [_c("v-icon", [_vm._v("build_circle")])],
                             1
                           ),
                           _vm._v(" "),
                           _c(
                             "v-list-item-content",
                             [
-                              _c("v-list-item-title", {
-                                domProps: { textContent: _vm._s(spot.name) }
-                              }),
-                              _vm._v(" "),
-                              _c("v-list-item-subtitle", {
-                                domProps: { textContent: _vm._s(spot.slug) }
-                              })
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("strong", [
+                                    _vm._v(" " + _vm._s(project.name) + " ")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-chip",
+                                    {
+                                      staticClass: "ma-2",
+                                      attrs: {
+                                        color: "pink",
+                                        label: "",
+                                        "text-color": "white"
+                                      }
+                                    },
+                                    [
+                                      _c("v-icon", { attrs: { left: "" } }, [
+                                        _vm._v(
+                                          "\n                                    account_balance\n                                "
+                                        )
+                                      ]),
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(_vm.getSpot(project.spot_id)) +
+                                          "\n                                "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
                             ],
                             1
                           ),
@@ -39467,7 +39508,7 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      index < _vm.$store.state.spots.length - 1
+                      index < _vm.$store.state.projects.length - 1
                         ? _c("v-divider", { key: index })
                         : _vm._e()
                     ]
@@ -100497,6 +100538,10 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(window.location.origin + "/api/
   // console.log(response);
   _store_blackroom__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('setUsers', response.data);
 })["catch"](function (error) {});
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(window.location.origin + "/api/projects").then(function (response) {
+  // console.log(response);
+  _store_blackroom__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('setProjects', response.data);
+})["catch"](function (error) {});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -101188,6 +101233,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     setUsersData: function setUsersData(state, payload) {
       state.users = payload;
     },
+    setProjectsData: function setProjectsData(state, payload) {
+      state.projects = payload;
+    },
     snackMessage: function snackMessage(state, payload) {
       state.snack = payload;
     }
@@ -101219,6 +101267,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         commit("snackMessage", {
           color: "success",
           text: "Utilisateur ajouté",
+          status: true
+        });
+      })["catch"](function (error) {});
+    },
+    setProjects: function setProjects(_ref5, payload) {
+      var commit = _ref5.commit;
+      commit("setProjectsData", payload);
+    },
+    addProject: function addProject(_ref6, payload) {
+      var commit = _ref6.commit;
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(window.location.origin + "/api/projects", payload).then(function (response) {
+        commit("setProjectsData", response.data);
+        commit("snackMessage", {
+          color: "success",
+          text: "Projet ajouté",
           status: true
         });
       })["catch"](function (error) {});

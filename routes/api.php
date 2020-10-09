@@ -17,10 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
 
     Route::post('login', 'LoginController@login')->name('login');
+
     Route::get('spots', 'SpotController@index')->name('getSpots');
     Route::get('users', 'UserController@index')->name('getUsers');
+    Route::get('projects', 'ProjectController@index')->name('getProjects');
+
     Route::post('spots', 'SpotController@store')->name('addSpot');
     Route::post('users', 'UserController@store')->name('addUser');
+    Route::post('projects', 'ProjectController@store')->name('addProject');
+
 
     Route::post('register', 'RegisterController@register')->name('register');
 
