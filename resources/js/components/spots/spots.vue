@@ -9,7 +9,7 @@
                 absolute
                 left
                 top
-                style="left:15px;top:25px"
+                style="left:15px;top:25px;z-index:2000"
             >
                 <v-icon color="black">
                     keyboard_backspace
@@ -20,34 +20,37 @@
             <v-row align="center" justify="center">
 
                 <v-col align="center" justify="center" cols="6" style="padding:0px;">
-                    <transition name="slide-fade">
-                        <v-row align="center" justify="center" :style="{'background-image': 'url(' + selectedBackground + ')'}" class="backgroundImage" style="height:100vh;">
+                    <v-row align="center" justify="center" style="height:100vh;position:relative;margin-right:0px;margin-left:0px">
+                        <div class="backgroundAnimator fader" style="z-index:1000; background-image:url('/img/quai-alpha.jpg')" v-show="selectedBackground =='qa'"></div>
+                        <div class="backgroundAnimator fader" style="z-index:1010; background-image:url('/img/pole-tourisme.jpg')" v-show="selectedBackground =='pt'"></div>
+                        <div class="backgroundAnimator fader" style="z-index:1020; background-image:url('/img/pole-image.jpg')" v-show="selectedBackground =='pi'"></div>
+                        <div class="backgroundAnimator fader" style="z-index:1030; background-image:url('/img/grande-finale.jpg')" v-show="selectedBackground =='gf'"></div>
+                        <div  class="backgroundAnimator aligner" style="z-index:1040"> <img src="/img/logo-qa-white.svg" width="600"></div>
 
-                            <img src="/img/logo-qa-white.svg" width="600">
 
-                        </v-row>
-                    </transition>
+                    </v-row>
                 </v-col>
 
                 <v-col align="center" justify="center" cols="6" style="padding:0px;">
                     <v-row class="specialHeight transit" align="center" justify="center"
                            :style="{backgroundColor : backgroundQA}"
-                           @mouseover="backgroundQA = '#C90F54', selectedBackground='/img/quai-alpha.jpg'"
-                           @mouseout="backgroundQA = '#212121',selectedBackground='none'" @click="goScoring()">scoring quai alpha
+                           @mouseover="backgroundQA = '#C90F54', selectedBackground='qa'"
+                           @mouseout="backgroundQA = '#212121',selectedBackground='none'" @click="goScoring()">scoring
+                        quai alpha
                     </v-row>
                     <v-row class="specialHeight transit" align="center" justify="center"
                            :style="{backgroundColor : backgroundTourisme}"
-                           @mouseover="backgroundTourisme = '#cae00f', selectedBackground='/img/pole-tourisme.jpg'"
+                           @mouseover="backgroundTourisme = '#cae00f', selectedBackground='pt'"
                            @mouseout="backgroundTourisme = '#424242',selectedBackground='none'">scoring pôle e-tourisme
                     </v-row>
                     <v-row class="specialHeight transit" align="center" justify="center"
                            :style="{backgroundColor : backgroundImage}"
-                           @mouseover="backgroundImage = '#21164E', selectedBackground='/img/pole-image.jpg'"
+                           @mouseover="backgroundImage = '#21164E', selectedBackground='pi'"
                            @mouseout="backgroundImage = '#616161',selectedBackground='none'">scoring pôle image
                     </v-row>
                     <v-row class="specialHeight transit" align="center" justify="center"
                            :style="{backgroundColor : backgroundFinale}"
-                           @mouseover="backgroundFinale = '#FFD500', selectedBackground='/img/grande-finale.jpg'"
+                           @mouseover="backgroundFinale = '#FFD500', selectedBackground='gf'"
                            @mouseout="backgroundFinale = '#757575',selectedBackground='none'">scoring grande finale
                     </v-row>
                 </v-col>
@@ -70,17 +73,50 @@
             }
         },
         methods: {
-            goScoring () {
-                this.$root.$router.push({ name: 'scoring' })
+            goScoring() {
+                this.$root.$router.push({name: 'scoring'})
             }
         }
     }
 </script>
 
 <style>
+    .aligner {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .transit {
         transition: background-color 0.5s ease;
     }
+    .backgroundAnimator {
+        position:absolute;
+        top:0px;
+        right:12px;
+        height:100%;
+        width:100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+
+    }
+
+
+    .fader {
+        display: inherit !important;
+        transition: opacity 1s;
+    }
+
+    .fader[style*="display: none;"] {
+        opacity: 0;
+        pointer-events: none;
+        user-select: none;
+    }
+
 
     .specialHeight {
         height: 25vh;
@@ -91,36 +127,12 @@
         text-transform: uppercase;
     }
 
-    .backgroundImage {
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        -webkit-transition: background-image 0.2s ease-in-out;
-        transition: background-image 0.2s ease-in-out;
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.3s
     }
 
-    .effect {
-        /* make this the size of the window */
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+    .fade-enter, .fade-leave-active {
+        opacity: 0
     }
-    .slide-fade-enter-active {
-        opacity: 1;
-        z-index: 10;
-    }
-
-    .slide-fade-leave-active {
-        opacity: 1;
-    }
-
-    .slide-fade-enter,
-    .slide-fade-leave-to {
-        opacity: 0;
-    }
-
 
 </style>
-

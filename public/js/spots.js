@@ -2098,6 +2098,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'spots.vue',
   data: function data() {
@@ -6601,7 +6604,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.transit {\n    transition: background-color 0.5s ease;\n}\n.specialHeight {\n    height: 25vh;\n    font-size: 40px;\n    color: white;\n    font-family: 'Roboto', sans-serif;\n    font-weight: 900;\n    text-transform: uppercase;\n}\n.backgroundImage {\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n    transition: background-image 0.2s ease-in-out;\n}\n.effect {\n    /* make this the size of the window */\n    position: absolute;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    left: 0;\n}\n.slide-fade-enter-active {\n    opacity: 1;\n    z-index: 10;\n}\n.slide-fade-leave-active {\n    opacity: 1;\n}\n.slide-fade-enter,\n.slide-fade-leave-to {\n    opacity: 0;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.aligner {\n    padding: 0;\n    margin: 0;\n    list-style: none;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.transit {\n    transition: background-color 0.5s ease;\n}\n.backgroundAnimator {\n    position:absolute;\n    top:0px;\n    right:12px;\n    height:100%;\n    width:100%;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n}\n.fader {\n    display: inherit !important;\n    transition: opacity 1s;\n}\n.fader[style*=\"display: none;\"] {\n    opacity: 0;\n    pointer-events: none;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.specialHeight {\n    height: 25vh;\n    font-size: 40px;\n    color: white;\n    font-family: 'Roboto', sans-serif;\n    font-weight: 900;\n    text-transform: uppercase;\n}\n.fade-enter-active, .fade-leave-active {\n    transition: opacity 0.3s\n}\n.fade-enter, .fade-leave-active {\n    opacity: 0\n}\n\n", ""]);
 
 // exports
 
@@ -38547,7 +38550,7 @@ var render = function() {
             "v-btn",
             {
               staticClass: "mx-2",
-              staticStyle: { left: "15px", top: "25px" },
+              staticStyle: { left: "15px", top: "25px", "z-index": "2000" },
               attrs: {
                 fab: "",
                 large: "",
@@ -38587,19 +38590,86 @@ var render = function() {
                 },
                 [
                   _c(
-                    "transition",
-                    { attrs: { name: "slide-fade" } },
+                    "v-row",
+                    {
+                      staticStyle: {
+                        height: "100vh",
+                        position: "relative",
+                        "margin-right": "0px",
+                        "margin-left": "0px"
+                      },
+                      attrs: { align: "center", justify: "center" }
+                    },
                     [
+                      _c("div", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.selectedBackground == "qa",
+                            expression: "selectedBackground =='qa'"
+                          }
+                        ],
+                        staticClass: "backgroundAnimator fader",
+                        staticStyle: {
+                          "z-index": "1000",
+                          "background-image": "url('/img/quai-alpha.jpg')"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.selectedBackground == "pt",
+                            expression: "selectedBackground =='pt'"
+                          }
+                        ],
+                        staticClass: "backgroundAnimator fader",
+                        staticStyle: {
+                          "z-index": "1010",
+                          "background-image": "url('/img/pole-tourisme.jpg')"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.selectedBackground == "pi",
+                            expression: "selectedBackground =='pi'"
+                          }
+                        ],
+                        staticClass: "backgroundAnimator fader",
+                        staticStyle: {
+                          "z-index": "1020",
+                          "background-image": "url('/img/pole-image.jpg')"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.selectedBackground == "gf",
+                            expression: "selectedBackground =='gf'"
+                          }
+                        ],
+                        staticClass: "backgroundAnimator fader",
+                        staticStyle: {
+                          "z-index": "1030",
+                          "background-image": "url('/img/grande-finale.jpg')"
+                        }
+                      }),
+                      _vm._v(" "),
                       _c(
-                        "v-row",
+                        "div",
                         {
-                          staticClass: "backgroundImage",
-                          staticStyle: { height: "100vh" },
-                          style: {
-                            "background-image":
-                              "url(" + _vm.selectedBackground + ")"
-                          },
-                          attrs: { align: "center", justify: "center" }
+                          staticClass: "backgroundAnimator aligner",
+                          staticStyle: { "z-index": "1040" }
                         },
                         [
                           _c("img", {
@@ -38610,8 +38680,7 @@ var render = function() {
                           })
                         ]
                       )
-                    ],
-                    1
+                    ]
                   )
                 ],
                 1
@@ -38633,7 +38702,7 @@ var render = function() {
                       on: {
                         mouseover: function($event) {
                           ;(_vm.backgroundQA = "#C90F54"),
-                            (_vm.selectedBackground = "/img/quai-alpha.jpg")
+                            (_vm.selectedBackground = "qa")
                         },
                         mouseout: function($event) {
                           ;(_vm.backgroundQA = "#212121"),
@@ -38644,7 +38713,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("scoring quai alpha\n                ")]
+                    [
+                      _vm._v(
+                        "scoring\n                    quai alpha\n                "
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -38656,7 +38729,7 @@ var render = function() {
                       on: {
                         mouseover: function($event) {
                           ;(_vm.backgroundTourisme = "#cae00f"),
-                            (_vm.selectedBackground = "/img/pole-tourisme.jpg")
+                            (_vm.selectedBackground = "pt")
                         },
                         mouseout: function($event) {
                           ;(_vm.backgroundTourisme = "#424242"),
@@ -38676,7 +38749,7 @@ var render = function() {
                       on: {
                         mouseover: function($event) {
                           ;(_vm.backgroundImage = "#21164E"),
-                            (_vm.selectedBackground = "/img/pole-image.jpg")
+                            (_vm.selectedBackground = "pi")
                         },
                         mouseout: function($event) {
                           ;(_vm.backgroundImage = "#616161"),
@@ -38696,7 +38769,7 @@ var render = function() {
                       on: {
                         mouseover: function($event) {
                           ;(_vm.backgroundFinale = "#FFD500"),
-                            (_vm.selectedBackground = "/img/grande-finale.jpg")
+                            (_vm.selectedBackground = "gf")
                         },
                         mouseout: function($event) {
                           ;(_vm.backgroundFinale = "#757575"),

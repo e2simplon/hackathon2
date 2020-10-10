@@ -10,8 +10,10 @@
         <script src="{{ asset('js/spots.js') }}" defer></script>
     </head>
     <body>
-    <v-app id="app">
+    <v-app id="app" style="background-color:black;">
+        <transition name="fade" mode="out-in" appear>
         <router-view></router-view>
+        </transition>
     </v-app>
     </body>
 </html>
