@@ -69,7 +69,7 @@
             </v-list-item-content>
             <v-list-item-action>
                 <div>
-                <v-btn icon>
+                <v-btn icon @click="goToUrl(spot.id)">
                     <v-icon color="grey lighten-1">create</v-icon>
                 </v-btn>
                 <v-btn icon>
@@ -113,6 +113,10 @@
 
                this.$store.dispatch('addSpot', {name: this.name, slug: this.slug});
                 this.$refs.spotForm.reset();
+            },
+            goToUrl: function(id) {
+                this.$root.$router.push({name: 'spotsEdit', params: {id:123}});
+
             }
         }
     }

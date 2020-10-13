@@ -18,7 +18,6 @@
         </a>
         <v-container fill-height fluid style="padding:0px;">
             <v-row align="center" justify="center">
-
                 <v-col align="center" justify="center" cols="6" style="padding:0px;">
                     <v-row align="center" justify="center" style="height:100vh;position:relative;margin-right:0px;margin-left:0px">
                         <div class="backgroundAnimator fader" style="z-index:1000; background-image:url('/img/quai-alpha.jpg')" v-show="selectedBackground =='qa'"></div>
@@ -69,7 +68,6 @@
                 backgroundImage: '#616161',
                 backgroundFinale: '#757575',
                 selectedBackground: 'none',
-                currentID: 0,
             }
         },
         methods: {

@@ -37,6 +37,11 @@ const routes = [
                 component: spots
             },
             {
+                path: 'spots/:id',
+                name: 'spotsEdit',
+                component: spots
+            },
+            {
                 path: 'projects',
                 name: 'projects',
                 component: projects

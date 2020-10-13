@@ -95654,6 +95654,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+new WebSocket("ws://hackathon2.demo:6001/app/RUse88KWHkcpCLhzhPA5vJ5T");
 
 
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);

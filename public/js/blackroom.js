@@ -2390,6 +2390,14 @@ __webpack_require__.r(__webpack_exports__);
         slug: this.slug
       });
       this.$refs.spotForm.reset();
+    },
+    goToUrl: function goToUrl(id) {
+      this.$root.$router.push({
+        name: 'spotsEdit',
+        params: {
+          id: 123
+        }
+      });
     }
   }
 });
@@ -39724,7 +39732,14 @@ var render = function() {
                               [
                                 _c(
                                   "v-btn",
-                                  { attrs: { icon: "" } },
+                                  {
+                                    attrs: { icon: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.goToUrl(spot.id)
+                                      }
+                                    }
+                                  },
                                   [
                                     _c(
                                       "v-icon",
@@ -101178,6 +101193,10 @@ var routes = [{
   }, {
     path: 'spots',
     name: 'spots',
+    component: _components_blackroom_spots__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }, {
+    path: 'spots/:id',
+    name: 'spotsEdit',
     component: _components_blackroom_spots__WEBPACK_IMPORTED_MODULE_6__["default"]
   }, {
     path: 'projects',
