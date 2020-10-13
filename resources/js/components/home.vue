@@ -21,7 +21,8 @@
                                 <rect x="5" y="5" rx="25" fill="none" stroke="white" width="410" height="50"></rect>
                             </svg>
                             <span>administration générale</span>
-                        </a>
+                        </a><br><br><br>
+                        <h1 v-for="project in projects" :key="project.id" style="color:white;">{{ project.name }}</h1>
                     </v-col>
                 </v-row>
             </v-container>
@@ -32,7 +33,8 @@
     export default {
         data: function() {
             return {
-                background: 'black'
+                background: 'black',
+                projects:[]
             }
         },
         methods: {
@@ -41,6 +43,7 @@
             Echo.channel('projects')
                 .listen('.projectUpdated', (e) => {
                     console.log(e);
+                    this.projects.unshift(e.project);
                 });
         }
     }

@@ -1938,16 +1938,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      background: 'black'
+      background: 'black',
+      projects: []
     };
   },
   methods: {},
   created: function created() {
+    var _this = this;
+
     Echo.channel('projects').listen('.projectUpdated', function (e) {
       console.log(e);
+
+      _this.projects.unshift(e.project);
     });
   }
 });
@@ -48669,8 +48675,20 @@ var render = function() {
                       _vm._v(" "),
                       _c("span", [_vm._v("administration générale")])
                     ]
-                  )
-                ]
+                  ),
+                  _c("br"),
+                  _c("br"),
+                  _c("br"),
+                  _vm._v(" "),
+                  _vm._l(_vm.projects, function(project) {
+                    return _c(
+                      "h1",
+                      { key: project.id, staticStyle: { color: "white" } },
+                      [_vm._v(_vm._s(project.name))]
+                    )
+                  })
+                ],
+                2
               )
             ],
             1
