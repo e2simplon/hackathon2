@@ -36,6 +36,12 @@
             }
         },
         methods: {
+        },
+        created() {
+            Echo.channel('projects')
+                .listen('.projectUpdated', (e) => {
+                    console.log(e);
+                });
         }
     }
 </script>

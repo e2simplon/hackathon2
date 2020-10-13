@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Project;
+use App\Events\ChangeProjectStatus;
 
 use Illuminate\Http\Request;
 
@@ -32,7 +33,9 @@ class ProjectController extends Controller
         $Project->spot_id =$request->spot_id;
         $Project->status_id = 1;
         $Project->save();
+        event(new ChangeProjectStatus($Project));
         return Project::orderBy('id', 'DESC')->get();
+
     }
 
     /**
