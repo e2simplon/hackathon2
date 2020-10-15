@@ -50,6 +50,83 @@ export default new Vuex.Store({
                 }).catch(error => {
             });
         },
+
+        /*DELETE USER*/
+        deleteUser({commit}, payload) {
+            axios.delete(window.location.origin + "/api/users/"+payload, payload)
+                .then(response => {
+                    commit("setUsersData", response.data);
+                    commit("snackMessage", {color:"success", text:"Utilisateur supprimé", status: true});
+                }).catch(error => {
+            });
+        },
+        /*DELETE USER*/
+
+        /*EDIT USER*/
+        editUserConfirm({commit}, payload) {
+            axios.put(window.location.origin + "/api/users/"+payload.id, payload)
+                .then(response => {
+                    commit("setUsersData", response.data);
+                    commit("snackMessage", {color:"success", text:"Utilisateur modifié", status: true});
+                }).catch(error => {
+            });
+        },
+        /*EDIT USER*/
+
+        /*EDIT USER PASSWORD*/
+        changePassword({commit}, payload) {
+            axios.patch(window.location.origin + "/api/users/"+payload.id, payload)
+                .then(response => {
+                    commit("snackMessage", {color:"success", text:"Mot de passe modifié", status: true});
+                }).catch(error => {
+            });
+        },
+        /*EDIT USER PASSWORD*/
+
+        /* DELETE SPOT */
+        deleteSpot({commit}, payload) {
+            axios.delete(window.location.origin + "/api/spots/"+payload, payload)
+                .then(response => {
+                    commit("setSpotsData", response.data);
+                    commit("snackMessage", {color:"success", text:"Plateau supprimé", status: true});
+                }).catch(error => {
+            });
+        },
+        /*DELETE SPOT*/
+
+        /*EDIT SPOT*/
+        editSpotConfirm({commit}, payload) {
+            axios.put(window.location.origin + "/api/spots/"+payload.id, payload)
+                .then(response => {
+                    commit("setSpotsData", response.data);
+                    commit("snackMessage", {color:"success", text:"Plateau modifié", status: true});
+                }).catch(error => {
+            });
+        },
+        /*EDIT SPOT*/
+
+        /* DELETE SPOT */
+        deleteProject({commit}, payload) {
+            axios.delete(window.location.origin + "/api/projects/"+payload, payload)
+                .then(response => {
+                    commit("setProjectsData", response.data);
+                    commit("snackMessage", {color:"success", text:"Plateau supprimé", status: true});
+                }).catch(error => {
+            });
+        },
+        /*DELETE SPOT*/
+
+        /*EDIT PROJECT*/
+        editProjectConfirm({commit}, payload) {
+            axios.put(window.location.origin + "/api/projects/"+payload.id, payload)
+                .then(response => {
+                    commit("setProjectsData", response.data);
+                    commit("snackMessage", {color:"success", text:"Projet modifié", status: true});
+                }).catch(error => {
+            });
+        },
+        /*EDIT PROJECT*/
+
         setProjects({commit}, payload) {
             commit("setProjectsData", payload);
         },

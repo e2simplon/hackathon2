@@ -1,6 +1,98 @@
 <template>
-    <div
-        style="padding-left:50px;padding-right:50px;">
+    <div style="padding-left:50px;padding-right:50px;">
+        <div class="text-center">
+        <v-dialog
+            v-model="dialog"
+            width="500"
+        >
+            <v-card>
+                <v-card-title class="lighten-2">
+                    Êtes-vous sûr ?
+                </v-card-title>
+                <v-card-text>
+                    Le projet sera supprimé !
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="dialog = false"
+                    >
+                        Annuler
+                    </v-btn>
+                    <v-btn
+                        color="error"
+                        @click="deleteProjectConfirm(projectIdToDelete)"
+                    >
+                        Supprimer
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog
+            v-model="dialogEdit"
+            width="500"
+        >
+            <v-card>
+                <v-card-title class="lighten-2">
+                    Modification projet
+                </v-card-title>
+                <v-form @submit.prevent="editProjectConfirm()" v-model="valid2" ref="projectForm">
+                    <v-card-text>
+
+                        <v-text-field
+                            id="name"
+                            prepend-icon="construction"
+                            name="name"
+                            label="Nom du projet"
+                            color="#e91f62"
+                            v-model="editedProject.name"
+                            :rules="nameRules"
+                            required></v-text-field>
+
+
+                        <v-select
+                            v-model="editedProject.spot_id"
+                            :items="$store.state.spots"
+                            item-text="name"
+                            item-value="id"
+                            id="spot_id"
+                            prepend-icon="account_balance"
+                            name="spot_id"
+                            type="text"
+                            color="#e91f62"
+                            label="Plateau"
+                            :rules="spotRules"
+                            required
+                        ></v-select>
+
+
+                    </v-card-text>
+                </v-form>
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="dialogEdit = false"
+                    >
+                        Annuler
+                    </v-btn>
+                    <v-btn
+                        color="success"
+                        @click="editProjectConfirm(editedProject)"
+                        :disabled="!valid2"
+                    >
+                        Modifier
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        </div>
         <h1 style="margin-bottom:20px;">Gestion des projets</h1>
         <v-card width="100%">
             <v-card-title>
@@ -84,10 +176,12 @@
                             </v-list-item-content>
                             <v-list-item-action>
                                 <div>
-                                    <v-btn icon>
+                                    <v-btn icon
+                                    @click="editProject(project.id)">
                                         <v-icon color="grey lighten-1">create</v-icon>
                                     </v-btn>
-                                    <v-btn icon>
+                                    <v-btn icon
+                                           @click="deleteProject(project.id)">
                                         <v-icon color="grey lighten-1">delete</v-icon>
                                     </v-btn>
                                 </div>
@@ -111,8 +205,13 @@
         data: function () {
             return {
                 valid: false,
+                valid2: false,
+                dialog: false,
+                dialogEdit: false,
                 spot_id: "",
                 name: "",
+                projectIdToDelete:"",
+                editedProject:"",
                 nameRules: [
                     v => !!v || 'Le nom est obligatoire',
                 ],
@@ -129,7 +228,24 @@
             },
             getSpot: function (spotId) {
                 return this.$store.state.spots.find(spot => spot.id === spotId).name;
-            }
+            },
+            deleteProject: function (projectId) {
+                this.dialog = true
+                this.projectIdToDelete = projectId;
+            },
+            deleteProjectConfirm: function () {
+                this.$store.dispatch('deleteProject', this.projectIdToDelete);
+                this.projectIdToDelete = "";
+                this.dialog = false
+            },
+            editProject: function (projectId){
+                this.editProject = this.$store.state.projects.find( project => project.id === projectId);
+                this.dialogEdit = true
+            },
+            editProjectConfirm: function (){
+                this.$store.dispatch('editProjectConfirm', {id: this.editedProject.id, name: this.editedProject.name, spot_id: this.editedProject.spot_id});
+                this.dialogEdit = false
+            },
         }
     }
 </script>

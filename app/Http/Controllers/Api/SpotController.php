@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
-use App\Http\Controllers\Controller;
 use App\Spot;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+
 
 class SpotController extends Controller
 {
@@ -15,7 +16,7 @@ class SpotController extends Controller
      */
     public function index()
     {
-       return Spot::orderBy('id', 'DESC')->get();
+        return Spot::orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -26,7 +27,7 @@ class SpotController extends Controller
      */
     public function store(Request $request)
     {
-       $Spot = new Spot();
+        $Spot = new Spot();
         $Spot->name = $request->name;
         $Spot->slug =$request->slug;
         $Spot->save();
@@ -54,6 +55,11 @@ class SpotController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $Spot = Spot::findOrFail($id);
+        $Spot->name = $request->name;
+        $Spot->slug =$request->slug;
+        $Spot->save();
+        return Spot::orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -64,6 +70,7 @@ class SpotController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Spot::where('id',$id)->delete();
+        return Spot::orderBy('id', 'DESC')->get();
     }
 }

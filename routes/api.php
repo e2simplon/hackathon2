@@ -26,6 +26,18 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::post('users', 'UserController@store')->name('addUser');
     Route::post('projects', 'ProjectController@store')->name('addProject');
 
+    Route::delete('users/{id}', 'UserController@destroy')->name('deleteUser');
+    Route::put('users/{id}', 'UserController@update')->name('editUserConfirm');
+    Route::patch('users/{id}', 'UserController@updatePassword')->name('changePassword');
+
+    Route::delete('spots/{id}', 'SpotController@destroy')->name('deleteSpot');
+    Route::put('spots/{id}', 'SpotController@update')->name('editSpotConfirm');
+
+    Route::delete('projects/{id}', 'ProjectController@destroy')->name('deleteProject');
+    Route::put('projects/{id}', 'ProjectController@update')->name('editProjectConfirm');
+
+    Route::post('register', 'RegisterController@register')->name('register');
+
 
     Route::post('register', 'RegisterController@register')->name('register');
 

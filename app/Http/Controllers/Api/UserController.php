@@ -57,7 +57,24 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $User = User::findOrFail($id);
+        $User->name = $request->name;
+        $User->email = $request->email;
+        $User->is_admin = $request->is_admin;
+        $User->is_judge = $request->is_judge;
+        $User->spot_id = $request->spot_id;
+        $User->save();
+        return User::orderBy('id', 'DESC')->get();
+    }
+
+
+    public function updatePassword(Request $request, $id)
+    {
         //
+        $User = User::findOrFail($id);
+        $User->password = Hash::make($request->password);
+        $User->save();
+        return 'Job Done';
     }
 
     /**
@@ -68,6 +85,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::where('id',$id)->delete();
+        return User::orderBy('id', 'DESC')->get();
     }
 }

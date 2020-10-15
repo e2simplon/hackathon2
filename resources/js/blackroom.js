@@ -11,6 +11,7 @@ import vuetify from './vuetify'
 import store from "./store/blackroom"
 import axios from "axios";
 import router from './router/blackroom'
+import _ from 'lodash';
 
 
 axios.interceptors.response.use(
@@ -87,5 +88,6 @@ const app = new Vue({
     el: '#app',
     store,
     vuetify,
+    _,
     router
 });

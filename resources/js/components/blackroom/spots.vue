@@ -1,6 +1,94 @@
 <template>
     <div
         style="padding-left:50px;padding-right:50px;">
+        <v-dialog
+            v-model="dialog"
+            width="500"
+        >
+            <v-card>
+                <v-card-title class="lighten-2">
+                    Êtes-vous sûr ?
+                </v-card-title>
+                <v-card-text>
+                    Le plateau sera supprimé !
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="dialog = false"
+                    >
+                        Annuler
+                    </v-btn>
+                    <v-btn
+                        color="error"
+                        @click="deleteSpotConfirm()"
+                    >
+                        Supprimer
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog
+            v-model="dialogEdit"
+            width="500"
+        >
+            <v-card>
+                <v-card-title class="lighten-2">
+                    Modifier le plateau
+                </v-card-title>
+                <v-card-text>
+                    <v-form @submit.prevent="editSpotConfirm()" v-model="valid2" ref="spotForm">
+                        <v-card-text>
+
+                            <v-text-field
+                                id="name"
+                                prepend-icon="account_balance"
+                                name="name"
+                                label="Nom du plateau"
+                                color="#e91f62"
+                                v-model="editedSpot.name"
+                                :rules="nameRules"
+                                required></v-text-field>
+
+
+                            <v-text-field id="slug"
+                                          prepend-icon="link"
+                                          name="slug"
+                                          label="slug"
+                                          color="#e91f62"
+                                          v-model="editedSpot.slug"
+                                          :rules="slugRules"
+                                          required></v-text-field>
+
+
+                        </v-card-text>
+                    </v-form>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="dialog = false"
+                    >
+                        Annuler
+                    </v-btn>
+                    <v-btn
+                        color="success"
+                        @click="editSpotConfirm(editedSpot)"
+                        :disabled="!valid2"
+                    >
+                        Modifier
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <h1 style="margin-bottom:20px;">Gestion des plateaux</h1>
         <v-card width="100%">
             <v-card-title>
@@ -69,10 +157,12 @@
             </v-list-item-content>
             <v-list-item-action>
                 <div>
-                <v-btn icon @click="goToUrl(spot.id)">
+                <v-btn icon
+                       @click="editSpot(spot.id)">
                     <v-icon color="grey lighten-1">create</v-icon>
                 </v-btn>
-                <v-btn icon>
+                <v-btn icon
+                       @click="deleteSpot(spot.id)">
                     <v-icon color="grey lighten-1">delete</v-icon>
                 </v-btn>
                 </div>
@@ -96,9 +186,13 @@
         data: function () {
             return {
                 valid:false,
+                valid2:false,
                 name:"",
                 slug:"",
-
+                dialog: false,
+                dialogEdit: false,
+                spotIdToDelete:"",
+                editedSpot:"",
 
                 nameRules: [
                     v => !!v || 'Le nom est obligatoire',
@@ -110,14 +204,26 @@
         },
         methods: {
             addSpot: function() {
-
                this.$store.dispatch('addSpot', {name: this.name, slug: this.slug});
                 this.$refs.spotForm.reset();
             },
-            goToUrl: function(id) {
-                this.$root.$router.push({name: 'spotsEdit', params: {id:123}});
-
-            }
+            deleteSpot: function (spotId) {
+                this.dialog = true
+                this.spotIdToDelete = spotId;
+            },
+            deleteSpotConfirm: function () {
+                this.$store.dispatch('deleteSpot', this.spotIdToDelete);
+                this.spotIdToDelete = "";
+                this.dialog = false
+            },
+            /*editSpot: function (spotId){
+                this.editedSpot = this.$store.state.spots.find( spot => spot.id === spotId);
+                this.dialogEdit = true
+            },
+            editSpotConfirm: function (){
+                this.$store.dispatch('editSpotConfirm', {id: this.editedSpot.id, name: this.editedSpot.name, slug: this.editedSpot.slug});
+                this.dialogEdit = false
+            },*/
         }
     }
 </script>
