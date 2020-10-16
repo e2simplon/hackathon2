@@ -2580,17 +2580,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "spots.vue",
   data: function data() {
     return {
-      valid: false,
-      valid2: false,
+      addSpotForm: false,
+      editSpotForm: false,
       name: "",
       slug: "",
-      dialog: false,
-      dialogEdit: false,
+      deleteSpotBox: false,
+      editSpotBox: false,
       spotIdToDelete: "",
+      spotNameToDelete: "",
+      deleteSpotNameBox: "",
       editedSpot: "",
       nameRules: [function (v) {
         return !!v || 'Le nom est obligatoire';
@@ -2608,24 +2621,32 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.$refs.spotForm.reset();
     },
-    deleteSpot: function deleteSpot(spotId) {
-      this.dialog = true;
+    deleteSpot: function deleteSpot(spotId, spotName) {
+      this.deleteSpotBox = true;
       this.spotIdToDelete = spotId;
+      this.spotNameToDelete = spotName;
     },
-    deleteSpotConfirm: function deleteSpotConfirm() {
+    deleteSpotAction: function deleteSpotAction() {
       this.$store.dispatch('deleteSpot', this.spotIdToDelete);
       this.spotIdToDelete = "";
-      this.dialog = false;
-    }
-    /*editSpot: function (spotId){
-        this.editedSpot = this.$store.state.spots.find( spot => spot.id === spotId);
-        this.dialogEdit = true
+      this.spotNameToDelete = "";
+      this.deleteSpotBox = false;
     },
-    editSpotConfirm: function (){
-        this.$store.dispatch('editSpotConfirm', {id: this.editedSpot.id, name: this.editedSpot.name, slug: this.editedSpot.slug});
-        this.dialogEdit = false
-    },*/
-
+    editSpot: function editSpot(spotId) {
+      var spotData = this.$store.state.spots.find(function (spot) {
+        return spot.id === spotId;
+      });
+      this.editedSpot = _.clone(spotData);
+      this.editSpotBox = true;
+    },
+    editSpotAction: function editSpotAction() {
+      this.$store.dispatch('editSpotConfirm', {
+        id: this.editedSpot.id,
+        name: this.editedSpot.name,
+        slug: this.editedSpot.slug
+      });
+      this.editSpotBox = false;
+    }
   }
 });
 
@@ -50664,26 +50685,53 @@ var render = function() {
         {
           attrs: { width: "500" },
           model: {
-            value: _vm.dialog,
+            value: _vm.deleteSpotBox,
             callback: function($$v) {
-              _vm.dialog = $$v
+              _vm.deleteSpotBox = $$v
             },
-            expression: "dialog"
+            expression: "deleteSpotBox"
           }
         },
         [
           _c(
             "v-card",
             [
-              _c("v-card-title", { staticClass: "lighten-2" }, [
-                _vm._v(
-                  "\n                    Êtes-vous sûr ?\n                "
-                )
-              ]),
+              _c(
+                "v-card-title",
+                {
+                  staticClass: "headline",
+                  staticStyle: { "background-color": "#e91e63" },
+                  attrs: { "primary-title": "" }
+                },
+                [
+                  _c("span", { staticStyle: { color: "white" } }, [
+                    _vm._v("Effacer un plateau")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", icon: "", color: "white", right: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteSpotBox = false
+                        }
+                      }
+                    },
+                    [_c("v-icon", { attrs: { large: "" } }, [_vm._v("close")])],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("v-card-text", [
+                _vm._v("\n                    Le plateau "),
+                _c("b", [_vm._v(_vm._s(_vm.spotNameToDelete))]),
                 _vm._v(
-                  "\n                    Le plateau sera supprimé !\n                "
+                  " sera définitivement supprimé, êtes-vous certain de vouloir faire cela ??\n                "
                 )
               ]),
               _vm._v(" "),
@@ -50700,7 +50748,7 @@ var render = function() {
                       attrs: { color: "secondary" },
                       on: {
                         click: function($event) {
-                          _vm.dialog = false
+                          _vm.deleteSpotBox = false
                         }
                       }
                     },
@@ -50714,10 +50762,11 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      attrs: { color: "error" },
+                      staticClass: "white--text",
+                      attrs: { color: "#e91f62" },
                       on: {
                         click: function($event) {
-                          return _vm.deleteSpotConfirm()
+                          return _vm.deleteSpotAction()
                         }
                       }
                     },
@@ -50742,22 +50791,47 @@ var render = function() {
         {
           attrs: { width: "500" },
           model: {
-            value: _vm.dialogEdit,
+            value: _vm.editSpotBox,
             callback: function($$v) {
-              _vm.dialogEdit = $$v
+              _vm.editSpotBox = $$v
             },
-            expression: "dialogEdit"
+            expression: "editSpotBox"
           }
         },
         [
           _c(
             "v-card",
             [
-              _c("v-card-title", { staticClass: "lighten-2" }, [
-                _vm._v(
-                  "\n                    Modifier le plateau\n                "
-                )
-              ]),
+              _c(
+                "v-card-title",
+                {
+                  staticClass: "headline",
+                  staticStyle: { "background-color": "#e91e63" },
+                  attrs: { "primary-title": "" }
+                },
+                [
+                  _c("span", { staticStyle: { color: "white" } }, [
+                    _vm._v("Modifier un plateau")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", icon: "", color: "white", right: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.editSpotBox = false
+                        }
+                      }
+                    },
+                    [_c("v-icon", { attrs: { large: "" } }, [_vm._v("close")])],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-card-text",
@@ -50769,15 +50843,15 @@ var render = function() {
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
-                          return _vm.editSpotConfirm()
+                          return _vm.editSpotAction()
                         }
                       },
                       model: {
-                        value: _vm.valid2,
+                        value: _vm.editSpotForm,
                         callback: function($$v) {
-                          _vm.valid2 = $$v
+                          _vm.editSpotForm = $$v
                         },
-                        expression: "valid2"
+                        expression: "editSpotForm"
                       }
                     },
                     [
@@ -50844,7 +50918,7 @@ var render = function() {
                       attrs: { color: "secondary" },
                       on: {
                         click: function($event) {
-                          _vm.dialog = false
+                          _vm.editSpotBox = false
                         }
                       }
                     },
@@ -50858,10 +50932,11 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      attrs: { color: "success", disabled: !_vm.valid2 },
+                      staticClass: "white--text",
+                      attrs: { color: "#e91f62", disabled: !_vm.editSpotForm },
                       on: {
                         click: function($event) {
-                          return _vm.editSpotConfirm(_vm.editedSpot)
+                          return _vm.editSpotAction(_vm.editedSpot)
                         }
                       }
                     },
@@ -50913,11 +50988,11 @@ var render = function() {
                 }
               },
               model: {
-                value: _vm.valid,
+                value: _vm.addSpotForm,
                 callback: function($$v) {
-                  _vm.valid = $$v
+                  _vm.addSpotForm = $$v
                 },
-                expression: "valid"
+                expression: "addSpotForm"
               }
             },
             [
@@ -50979,7 +51054,7 @@ var render = function() {
                         color: "#e91f62",
                         type: "submit",
                         "x-large": "",
-                        disabled: !_vm.valid
+                        disabled: !_vm.addSpotForm
                       }
                     },
                     [
@@ -51077,7 +51152,10 @@ var render = function() {
                                     attrs: { icon: "" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.deleteSpot(spot.id)
+                                        return _vm.deleteSpot(
+                                          spot.id,
+                                          spot.name
+                                        )
                                       }
                                     }
                                   },

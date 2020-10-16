@@ -2,15 +2,20 @@
     <div
         style="padding-left:50px;padding-right:50px;">
         <v-dialog
-            v-model="dialog"
+            v-model="deleteSpotBox"
             width="500"
         >
             <v-card>
-                <v-card-title class="lighten-2">
-                    Êtes-vous sûr ?
+                <v-card-title class="headline" primary-title style="background-color:#e91e63;">
+                    <span style="color:white;">Effacer un plateau</span>
+                    <v-spacer></v-spacer>
+                    <v-btn text icon color="white" right @click="deleteSpotBox = false">
+                        <v-icon large>close</v-icon>
+                    </v-btn>
                 </v-card-title>
+
                 <v-card-text>
-                    Le plateau sera supprimé !
+                    Le plateau <b>{{ spotNameToDelete }}</b> sera définitivement supprimé, êtes-vous certain de vouloir faire cela ??
                 </v-card-text>
 
                 <v-divider></v-divider>
@@ -19,13 +24,14 @@
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
-                        @click="dialog = false"
+                        @click="deleteSpotBox = false"
                     >
                         Annuler
                     </v-btn>
                     <v-btn
-                        color="error"
-                        @click="deleteSpotConfirm()"
+                        color="#e91f62"
+                        @click="deleteSpotAction()"
+                        class="white--text"
                     >
                         Supprimer
                     </v-btn>
@@ -33,15 +39,19 @@
             </v-card>
         </v-dialog>
         <v-dialog
-            v-model="dialogEdit"
+            v-model="editSpotBox"
             width="500"
         >
             <v-card>
-                <v-card-title class="lighten-2">
-                    Modifier le plateau
+                <v-card-title class="headline" primary-title style="background-color:#e91e63;">
+                    <span style="color:white;">Modifier un plateau</span>
+                    <v-spacer></v-spacer>
+                    <v-btn text icon color="white" right @click="editSpotBox = false">
+                        <v-icon large>close</v-icon>
+                    </v-btn>
                 </v-card-title>
                 <v-card-text>
-                    <v-form @submit.prevent="editSpotConfirm()" v-model="valid2" ref="spotForm">
+                    <v-form @submit.prevent="editSpotAction()" v-model="editSpotForm" ref="spotForm">
                         <v-card-text>
 
                             <v-text-field
@@ -75,14 +85,15 @@
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
-                        @click="dialog = false"
+                        @click="editSpotBox = false"
                     >
                         Annuler
                     </v-btn>
                     <v-btn
-                        color="success"
-                        @click="editSpotConfirm(editedSpot)"
-                        :disabled="!valid2"
+                        color="#e91f62"
+                        @click="editSpotAction(editedSpot)"
+                        :disabled="!editSpotForm"
+                        class="white--text"
                     >
                         Modifier
                     </v-btn>
@@ -98,7 +109,7 @@
                 </v-icon>
                 &nbsp;Ajouter un plateau
             </v-card-title>
-            <v-form @submit.prevent="addSpot()" v-model="valid" ref="spotForm">
+            <v-form @submit.prevent="addSpot()" v-model="addSpotForm" ref="spotForm">
                 <v-card-text>
 
                     <v-text-field
@@ -125,7 +136,7 @@
                 </v-card-text>
                 <v-card-actions style="padding:20px;">
                     <v-spacer></v-spacer>
-                    <v-btn color="#e91f62" type="submit" x-large :disabled="!valid" class="white--text"> Enregistrer
+                    <v-btn color="#e91f62" type="submit" x-large :disabled="!addSpotForm" class="white--text"> Enregistrer
                         le plateau
                     </v-btn>
 
@@ -162,7 +173,7 @@
                     <v-icon color="grey lighten-1">create</v-icon>
                 </v-btn>
                 <v-btn icon
-                       @click="deleteSpot(spot.id)">
+                       @click="deleteSpot(spot.id, spot.name)">
                     <v-icon color="grey lighten-1">delete</v-icon>
                 </v-btn>
                 </div>
@@ -185,13 +196,15 @@
         name: "spots.vue",
         data: function () {
             return {
-                valid:false,
-                valid2:false,
+                addSpotForm:false,
+                editSpotForm:false,
                 name:"",
                 slug:"",
-                dialog: false,
-                dialogEdit: false,
+                deleteSpotBox: false,
+                editSpotBox: false,
                 spotIdToDelete:"",
+                spotNameToDelete:"",
+                deleteSpotNameBox:"",
                 editedSpot:"",
 
                 nameRules: [
@@ -207,23 +220,26 @@
                this.$store.dispatch('addSpot', {name: this.name, slug: this.slug});
                 this.$refs.spotForm.reset();
             },
-            deleteSpot: function (spotId) {
-                this.dialog = true
+            deleteSpot: function (spotId, spotName) {
+                this.deleteSpotBox = true;
                 this.spotIdToDelete = spotId;
+                this.spotNameToDelete = spotName;
             },
-            deleteSpotConfirm: function () {
+            deleteSpotAction: function () {
                 this.$store.dispatch('deleteSpot', this.spotIdToDelete);
                 this.spotIdToDelete = "";
-                this.dialog = false
+                this.spotNameToDelete = "";
+                this.deleteSpotBox  = false
             },
-            /*editSpot: function (spotId){
-                this.editedSpot = this.$store.state.spots.find( spot => spot.id === spotId);
-                this.dialogEdit = true
+            editSpot: function (spotId){
+                let spotData = this.$store.state.spots.find( spot => spot.id === spotId);
+                this.editedSpot = _.clone(spotData);
+                this.editSpotBox = true;
             },
-            editSpotConfirm: function (){
+            editSpotAction: function (){
                 this.$store.dispatch('editSpotConfirm', {id: this.editedSpot.id, name: this.editedSpot.name, slug: this.editedSpot.slug});
-                this.dialogEdit = false
-            },*/
+                this.editSpotBox = false
+            },
         }
     }
 </script>
