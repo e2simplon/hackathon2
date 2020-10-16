@@ -2328,18 +2328,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "projects.vue",
   data: function data() {
     return {
-      valid: false,
-      valid2: false,
-      dialog: false,
-      dialogEdit: false,
+      addProjectForm: false,
+      editProjectForm: false,
+      deleteProjectBox: false,
+      editProjectBox: false,
       spot_id: "",
       name: "",
       projectIdToDelete: "",
-      editedProject: "",
+      projectNameToDelete: "",
+      editedProject: {},
       nameRules: [function (v) {
         return !!v || 'Le nom est obligatoire';
       }],
@@ -2361,28 +2372,32 @@ __webpack_require__.r(__webpack_exports__);
         return spot.id === spotId;
       }).name;
     },
-    deleteProject: function deleteProject(projectId) {
-      this.dialog = true;
+    deleteProject: function deleteProject(projectId, projectName) {
+      this.deleteProjectBox = true;
+      this.projectNameToDelete = projectName;
       this.projectIdToDelete = projectId;
     },
-    deleteProjectConfirm: function deleteProjectConfirm() {
+    deleteProjectAction: function deleteProjectAction() {
       this.$store.dispatch('deleteProject', this.projectIdToDelete);
       this.projectIdToDelete = "";
-      this.dialog = false;
+      this.projectNameToDelete = "";
+      this.deleteProjectBox = false;
     },
     editProject: function editProject(projectId) {
-      this.editProject = this.$store.state.projects.find(function (project) {
+      var projectData = this.$store.state.projects.find(function (project) {
         return project.id === projectId;
       });
-      this.dialogEdit = true;
+      this.editedProject = _.clone(projectData);
+      this.editProjectBox = true;
     },
-    editProjectConfirm: function editProjectConfirm() {
+    editProjectAction: function editProjectAction() {
       this.$store.dispatch('editProjectConfirm', {
         id: this.editedProject.id,
         name: this.editedProject.name,
         spot_id: this.editedProject.spot_id
       });
-      this.dialogEdit = false;
+      this.editProjectBox = false;
+      this.$refs.projectFormEdit.reset();
     }
   }
 });
@@ -2604,7 +2619,7 @@ __webpack_require__.r(__webpack_exports__);
       spotIdToDelete: "",
       spotNameToDelete: "",
       deleteSpotNameBox: "",
-      editedSpot: "",
+      editedSpot: {},
       nameRules: [function (v) {
         return !!v || 'Le nom est obligatoire';
       }],
@@ -50174,24 +50189,62 @@ var render = function() {
             {
               attrs: { width: "500" },
               model: {
-                value: _vm.dialog,
+                value: _vm.deleteProjectBox,
                 callback: function($$v) {
-                  _vm.dialog = $$v
+                  _vm.deleteProjectBox = $$v
                 },
-                expression: "dialog"
+                expression: "deleteProjectBox"
               }
             },
             [
               _c(
                 "v-card",
                 [
-                  _c("v-card-title", { staticClass: "lighten-2" }, [
-                    _vm._v("\n                Êtes-vous sûr ?\n            ")
-                  ]),
+                  _c(
+                    "v-card-title",
+                    {
+                      staticClass: "headline",
+                      staticStyle: { "background-color": "#e91e63" },
+                      attrs: { "primary-title": "" }
+                    },
+                    [
+                      _c("span", { staticStyle: { color: "white" } }, [
+                        _vm._v("Effacer un projet")
+                      ]),
+                      _vm._v(" "),
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            text: "",
+                            icon: "",
+                            color: "white",
+                            right: ""
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteProjectBox = false
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { large: "" } }, [
+                            _vm._v("close")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("v-card-text", [
+                    _vm._v("\n                Le projet "),
+                    _c("b", [_vm._v(_vm._s(_vm.projectNameToDelete))]),
                     _vm._v(
-                      "\n                Le projet sera supprimé !\n            "
+                      " sera définitivement supprimé, êtes-vous certain de vouloir faire cela ??\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -50208,7 +50261,7 @@ var render = function() {
                           attrs: { color: "secondary" },
                           on: {
                             click: function($event) {
-                              _vm.dialog = false
+                              _vm.deleteProjectBox = false
                             }
                           }
                         },
@@ -50222,12 +50275,11 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "error" },
+                          staticClass: "white--text",
+                          attrs: { color: "#e91e63" },
                           on: {
                             click: function($event) {
-                              return _vm.deleteProjectConfirm(
-                                _vm.projectIdToDelete
-                              )
+                              return _vm.deleteProjectAction()
                             }
                           }
                         },
@@ -50252,27 +50304,61 @@ var render = function() {
             {
               attrs: { width: "500" },
               model: {
-                value: _vm.dialogEdit,
+                value: _vm.editProjectBox,
                 callback: function($$v) {
-                  _vm.dialogEdit = $$v
+                  _vm.editProjectBox = $$v
                 },
-                expression: "dialogEdit"
+                expression: "editProjectBox"
               }
             },
             [
               _c(
                 "v-card",
                 [
-                  _c("v-card-title", { staticClass: "lighten-2" }, [
-                    _vm._v(
-                      "\n                Modification projet\n            "
-                    )
-                  ]),
+                  _c(
+                    "v-card-title",
+                    {
+                      staticClass: "headline",
+                      staticStyle: { "background-color": "#e91e63" },
+                      attrs: { "primary-title": "" }
+                    },
+                    [
+                      _c("span", { staticStyle: { color: "white" } }, [
+                        _vm._v("Editer un projet")
+                      ]),
+                      _vm._v(" "),
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            text: "",
+                            icon: "",
+                            color: "white",
+                            right: ""
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.editProjectBox = false
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { large: "" } }, [
+                            _vm._v("close")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-form",
                     {
-                      ref: "projectForm",
+                      ref: "projectFormEdit",
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
@@ -50280,11 +50366,11 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.valid2,
+                        value: _vm.editProjectForm,
                         callback: function($$v) {
-                          _vm.valid2 = $$v
+                          _vm.editProjectForm = $$v
                         },
-                        expression: "valid2"
+                        expression: "editProjectForm"
                       }
                     },
                     [
@@ -50352,7 +50438,7 @@ var render = function() {
                           attrs: { color: "secondary" },
                           on: {
                             click: function($event) {
-                              _vm.dialogEdit = false
+                              _vm.editProjectForm = false
                             }
                           }
                         },
@@ -50366,10 +50452,14 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "success", disabled: !_vm.valid2 },
+                          staticClass: "white--text",
+                          attrs: {
+                            color: "#e91f62",
+                            disabled: !_vm.editProjectForm
+                          },
                           on: {
                             click: function($event) {
-                              return _vm.editProjectConfirm(_vm.editedProject)
+                              return _vm.editProjectAction()
                             }
                           }
                         },
@@ -50422,11 +50512,11 @@ var render = function() {
                 }
               },
               model: {
-                value: _vm.valid,
+                value: _vm.addProjectForm,
                 callback: function($$v) {
-                  _vm.valid = $$v
+                  _vm.addProjectForm = $$v
                 },
-                expression: "valid"
+                expression: "addProjectForm"
               }
             },
             [
@@ -50492,7 +50582,7 @@ var render = function() {
                         color: "#e91f62",
                         type: "submit",
                         "x-large": "",
-                        disabled: !_vm.valid
+                        disabled: !_vm.addProjectForm
                       }
                     },
                     [
@@ -50615,7 +50705,10 @@ var render = function() {
                                     attrs: { icon: "" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.deleteProject(project.id)
+                                        return _vm.deleteProject(
+                                          project.id,
+                                          project.name
+                                        )
                                       }
                                     }
                                   },
@@ -113374,7 +113467,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         commit("setProjectsData", response.data);
         commit("snackMessage", {
           color: "success",
-          text: "Plateau supprimé",
+          text: "Projet supprimé",
           status: true
         });
       })["catch"](function (error) {});

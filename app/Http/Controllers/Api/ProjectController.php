@@ -33,7 +33,7 @@ class ProjectController extends Controller
         $Project->spot_id =$request->spot_id;
         $Project->status_id = 1;
         $Project->save();
-        event(new ChangeProjectStatus($Project));
+        // event(new ChangeProjectStatus($Project));
         return Project::orderBy('id', 'DESC')->get();
 
     }
@@ -58,7 +58,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Project = Project::findOrFail($id);
+        $Project->name = $request->name;
+        $Project->spot_id =$request->spot_id;
+        $Project->save();
+        return Project::orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -69,6 +73,7 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Project::where('id',$id)->delete();
+        return Project::orderBy('id', 'DESC')->get();
     }
 }

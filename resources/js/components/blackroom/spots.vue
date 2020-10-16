@@ -205,7 +205,7 @@
                 spotIdToDelete:"",
                 spotNameToDelete:"",
                 deleteSpotNameBox:"",
-                editedSpot:"",
+                editedSpot:{},
 
                 nameRules: [
                     v => !!v || 'Le nom est obligatoire',

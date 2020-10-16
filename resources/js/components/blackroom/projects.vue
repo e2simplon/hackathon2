@@ -2,15 +2,19 @@
     <div style="padding-left:50px;padding-right:50px;">
         <div class="text-center">
         <v-dialog
-            v-model="dialog"
+            v-model="deleteProjectBox"
             width="500"
         >
             <v-card>
-                <v-card-title class="lighten-2">
-                    Êtes-vous sûr ?
+                <v-card-title class="headline" primary-title style="background-color:#e91e63;">
+                    <span style="color:white;">Effacer un projet</span>
+                    <v-spacer></v-spacer>
+                    <v-btn text icon color="white" right @click="deleteProjectBox = false">
+                        <v-icon large>close</v-icon>
+                    </v-btn>
                 </v-card-title>
                 <v-card-text>
-                    Le projet sera supprimé !
+                    Le projet <b>{{ projectNameToDelete }}</b> sera définitivement supprimé, êtes-vous certain de vouloir faire cela ??
                 </v-card-text>
 
                 <v-divider></v-divider>
@@ -19,13 +23,14 @@
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
-                        @click="dialog = false"
+                        @click="deleteProjectBox = false"
                     >
                         Annuler
                     </v-btn>
                     <v-btn
-                        color="error"
-                        @click="deleteProjectConfirm(projectIdToDelete)"
+                        color="#e91e63"
+                        @click="deleteProjectAction()"
+                        class="white--text"
                     >
                         Supprimer
                     </v-btn>
@@ -33,14 +38,18 @@
             </v-card>
         </v-dialog>
         <v-dialog
-            v-model="dialogEdit"
+            v-model="editProjectBox"
             width="500"
         >
             <v-card>
-                <v-card-title class="lighten-2">
-                    Modification projet
+                <v-card-title class="headline" primary-title style="background-color:#e91e63;">
+                    <span style="color:white;">Editer un projet</span>
+                    <v-spacer></v-spacer>
+                    <v-btn text icon color="white" right @click="editProjectBox = false">
+                        <v-icon large>close</v-icon>
+                    </v-btn>
                 </v-card-title>
-                <v-form @submit.prevent="editProjectConfirm()" v-model="valid2" ref="projectForm">
+                <v-form @submit.prevent="editProjectConfirm()" v-model="editProjectForm" ref="projectFormEdit">
                     <v-card-text>
 
                         <v-text-field
@@ -78,14 +87,15 @@
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
-                        @click="dialogEdit = false"
+                        @click="editProjectForm = false"
                     >
                         Annuler
                     </v-btn>
                     <v-btn
-                        color="success"
-                        @click="editProjectConfirm(editedProject)"
-                        :disabled="!valid2"
+                        color="#e91f62"
+                        @click="editProjectAction()"
+                        :disabled="!editProjectForm"
+                        class="white--text"
                     >
                         Modifier
                     </v-btn>
@@ -102,7 +112,7 @@
                 </v-icon>
                 &nbsp;Ajouter un projet
             </v-card-title>
-            <v-form @submit.prevent="addProject()" v-model="valid" ref="projectForm">
+            <v-form @submit.prevent="addProject()" v-model="addProjectForm" ref="projectForm">
                 <v-card-text>
 
                     <v-text-field
@@ -135,7 +145,7 @@
                 </v-card-text>
                 <v-card-actions style="padding:20px;">
                     <v-spacer></v-spacer>
-                    <v-btn color="#e91f62" type="submit" x-large :disabled="!valid" class="white--text"> Enregistrer
+                    <v-btn color="#e91f62" type="submit" x-large :disabled="!addProjectForm" class="white--text"> Enregistrer
                         le projet
                     </v-btn>
 
@@ -181,7 +191,7 @@
                                         <v-icon color="grey lighten-1">create</v-icon>
                                     </v-btn>
                                     <v-btn icon
-                                           @click="deleteProject(project.id)">
+                                           @click="deleteProject(project.id, project.name)">
                                         <v-icon color="grey lighten-1">delete</v-icon>
                                     </v-btn>
                                 </div>
@@ -204,14 +214,15 @@
         name: "projects.vue",
         data: function () {
             return {
-                valid: false,
-                valid2: false,
-                dialog: false,
-                dialogEdit: false,
+                addProjectForm: false,
+                editProjectForm: false,
+                deleteProjectBox: false,
+                editProjectBox: false,
                 spot_id: "",
                 name: "",
                 projectIdToDelete:"",
-                editedProject:"",
+                projectNameToDelete:"",
+                editedProject:{},
                 nameRules: [
                     v => !!v || 'Le nom est obligatoire',
                 ],
@@ -229,22 +240,26 @@
             getSpot: function (spotId) {
                 return this.$store.state.spots.find(spot => spot.id === spotId).name;
             },
-            deleteProject: function (projectId) {
-                this.dialog = true
+            deleteProject: function (projectId, projectName) {
+                this.deleteProjectBox = true;
+                this.projectNameToDelete = projectName;
                 this.projectIdToDelete = projectId;
             },
-            deleteProjectConfirm: function () {
+            deleteProjectAction: function () {
                 this.$store.dispatch('deleteProject', this.projectIdToDelete);
                 this.projectIdToDelete = "";
-                this.dialog = false
+                this.projectNameToDelete = "";
+                this.deleteProjectBox = false
             },
             editProject: function (projectId){
-                this.editProject = this.$store.state.projects.find( project => project.id === projectId);
-                this.dialogEdit = true
+                let projectData = this.$store.state.projects.find( project => project.id === projectId);
+                this.editedProject = _.clone(projectData);
+                this.editProjectBox = true;
             },
-            editProjectConfirm: function (){
+            editProjectAction: function (){
                 this.$store.dispatch('editProjectConfirm', {id: this.editedProject.id, name: this.editedProject.name, spot_id: this.editedProject.spot_id});
-                this.dialogEdit = false
+                this.editProjectBox = false;
+                this.$refs.projectFormEdit.reset();
             },
         }
     }

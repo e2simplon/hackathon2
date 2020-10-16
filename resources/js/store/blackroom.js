@@ -110,7 +110,7 @@ export default new Vuex.Store({
             axios.delete(window.location.origin + "/api/projects/"+payload, payload)
                 .then(response => {
                     commit("setProjectsData", response.data);
-                    commit("snackMessage", {color:"success", text:"Plateau supprimé", status: true});
+                    commit("snackMessage", {color:"success", text:"Projet supprimé", status: true});
                 }).catch(error => {
             });
         },
