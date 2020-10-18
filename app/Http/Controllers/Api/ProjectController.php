@@ -22,6 +22,9 @@ class ProjectController extends Controller
         foreach (Project::orderBy('id', 'DESC')->get() as $project){
             Log::info($project->name . " // " .  $project->status->name . " // " .$project->spot->name);
         }
+        foreach (Project::orderBy('id', 'DESC')->with('spot','status')->get() as $project){
+            Log::info($project);
+        }
         // jusque là
         return Project::orderBy('id', 'DESC')->get();
 
