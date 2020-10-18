@@ -19,12 +19,18 @@ class ProjectController extends Controller
     public function index()
     {
         // à effacer exemple relation modele et objet
+        $start = microtime(true);
         foreach (Project::orderBy('id', 'DESC')->get() as $project){
             Log::info($project->name . " // " .  $project->status->name . " // " .$project->spot->name);
         }
+        $time = microtime(true) - $start;
+        Log::info($time);
+        $start = microtime(true);
         foreach (Project::orderBy('id', 'DESC')->with('spot','status')->get() as $project){
-            Log::info($project);
+            Log::info($project->name . " // " .  $project->status->name . " // " .$project->spot->name);
         }
+        $time = microtime(true) - $start;
+        Log::info($time);
         // jusque là
         return Project::orderBy('id', 'DESC')->get();
 
