@@ -50438,7 +50438,7 @@ var render = function() {
                           attrs: { color: "secondary" },
                           on: {
                             click: function($event) {
-                              _vm.editProjectForm = false
+                              _vm.editProjectBox = false
                             }
                           }
                         },

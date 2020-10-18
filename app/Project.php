@@ -13,4 +13,14 @@ class Project extends Model
     protected $dispatchesEvents = [
         'updated' => \App\Events\ProjectUpdated::class,
     ]; */
+
+    public function spot()
+    {
+        return $this->belongsTo('App\Spot');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Status');
+    }
 }

@@ -87,7 +87,7 @@
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
-                        @click="editProjectForm = false"
+                        @click="editProjectBox = false"
                     >
                         Annuler
                     </v-btn>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Project;
 use App\Events\ChangeProjectStatus;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
 
@@ -17,7 +18,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        // à effacer exemple relation modele et objet
+        foreach (Project::orderBy('id', 'DESC')->get() as $project){
+            Log::info($project->name . " // " .  $project->status->name . " // " .$project->spot->name);
+        }
+        // jusque là
         return Project::orderBy('id', 'DESC')->get();
+
     }
 
     /**
@@ -33,7 +40,7 @@ class ProjectController extends Controller
         $Project->spot_id =$request->spot_id;
         $Project->status_id = 1;
         $Project->save();
-        // event(new ChangeProjectStatus($Project));
+        event(new ChangeProjectStatus($Project));
         return Project::orderBy('id', 'DESC')->get();
 
     }

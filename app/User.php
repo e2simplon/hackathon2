@@ -43,4 +43,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new VerifyEmail());
     }
+
+    public function spot()
+    {
+        return $this->belongsTo('App\Spot');
+    }
 }
