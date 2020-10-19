@@ -6,6 +6,7 @@ import general from '../components/blackroom/general'
 import users from '../components/blackroom/users'
 import spots from '../components/blackroom/spots'
 import projects from '../components/blackroom/projects'
+import projectsStatus from '../components/blackroom/projectsStatus'
 
 
 Vue.use(VueRouter)
@@ -45,6 +46,11 @@ const routes = [
                 path: 'projects',
                 name: 'projects',
                 component: projects
+            },
+            {
+                path: 'projects-status',
+                name: 'projectsStatus',
+                component: projectsStatus
             },
         ]
     },
