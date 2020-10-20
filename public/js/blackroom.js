@@ -2170,6 +2170,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "projectStatusDetail.vue",
   props: ['projectId'],
@@ -2190,7 +2197,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getIdProject: function getIdProject() {
-      alert(this.projectId + '//' + this.projectStatus);
+      var _this2 = this;
+
+      alert(this.$store.state.projects.find(function (project) {
+        return project.id === _this2.projectId;
+      }).id + '//' + this.$store.state.projects.find(function (project) {
+        return project.id === _this2.projectId;
+      }).status_id);
+    },
+    changeStatus: function changeStatus() {
+      this.$store.dispatch('changeProjectStatus', this.projectId);
     }
   }
 });
@@ -50358,7 +50374,7 @@ var render = function() {
         "v-list-item-content",
         [
           _c("v-list-item-title", [
-            _c("h2", [_vm._v(" " + _vm._s(_vm.projectName) + " ")])
+            _c("strong", [_vm._v(" " + _vm._s(_vm.projectName) + " ")])
           ])
         ],
         1
@@ -50368,6 +50384,12 @@ var render = function() {
         _c(
           "div",
           [
+            _c(
+              "v-chip",
+              { attrs: { color: "#c90f54", "text-color": "white" } },
+              [_c("strong", [_vm._v(" 0 / 10")])]
+            ),
+            _vm._v("   \n            "),
             _c(
               "v-btn",
               {
@@ -50381,7 +50403,26 @@ var render = function() {
               },
               [
                 _c("v-icon", { attrs: { color: "grey lighten-1" } }, [
-                  _vm._v("create")
+                  _vm._v("schedule")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-btn",
+              {
+                staticClass: "mx-2",
+                attrs: { fab: "", large: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.changeStatus()
+                  }
+                }
+              },
+              [
+                _c("v-icon", { attrs: { color: "grey lighten-1" } }, [
+                  _vm._v("how_to_vote")
                 ])
               ],
               1
@@ -50396,22 +50437,7 @@ var render = function() {
               },
               [
                 _c("v-icon", { attrs: { color: "grey lighten-1" } }, [
-                  _vm._v("delete")
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-btn",
-              {
-                staticClass: "mx-2",
-                attrs: { fab: "", large: "" },
-                on: { click: function($event) {} }
-              },
-              [
-                _c("v-icon", { attrs: { color: "grey lighten-1" } }, [
-                  _vm._v("delete")
+                  _vm._v("cancel")
                 ])
               ],
               1
@@ -50910,9 +50936,7 @@ var render = function() {
                               _c(
                                 "v-list-item-title",
                                 [
-                                  _c("strong", [
-                                    _vm._v(" " + _vm._s(project.name) + " ")
-                                  ]),
+                                  _c("strong", [_vm._v(_vm._s(project.name))]),
                                   _vm._v(" "),
                                   _c(
                                     "v-chip",
@@ -113841,6 +113865,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     snackMessage: function snackMessage(state, payload) {
       state.snack = payload;
+    },
+    changeProjectStatus: function changeProjectStatus(state, payload) {
+      var project = state.projects.find(function (item) {
+        return item.id === payload;
+      });
+      project.status_id = 2;
     }
   },
   actions: {
@@ -113992,6 +114022,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           status: true
         });
       })["catch"](function (error) {});
+    },
+    changeProjectStatus: function changeProjectStatus(_ref14, payload) {
+      var commit = _ref14.commit;
+      commit("changeProjectStatus", payload);
     }
   }
 }));

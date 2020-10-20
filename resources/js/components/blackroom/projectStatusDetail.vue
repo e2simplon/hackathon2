@@ -6,20 +6,27 @@
             <v-icon large>build_circle</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-            <v-list-item-title><h2> {{ projectName }} </h2>
+            <v-list-item-title>
+              <strong> {{ projectName }} </strong>
 
             </v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
             <div>
+                <v-chip
+                    color="#c90f54"
+                    text-color="white"
+                >
+                   <strong> 0 / 10</strong>
+                </v-chip>&nbsp;&nbsp;&nbsp;
                 <v-btn @click="getIdProject()" fab large class="mx-2">
-                    <v-icon color="grey lighten-1">create</v-icon>
+                    <v-icon color="grey lighten-1">schedule</v-icon>
+                </v-btn>
+                <v-btn @click="changeStatus()" fab large class="mx-2">
+                    <v-icon color="grey lighten-1">how_to_vote</v-icon>
                 </v-btn>
                 <v-btn @click="" fab large class="mx-2">
-                    <v-icon color="grey lighten-1">delete</v-icon>
-                </v-btn>
-                <v-btn @click="" fab large class="mx-2">
-                    <v-icon color="grey lighten-1">delete</v-icon>
+                    <v-icon color="grey lighten-1">cancel</v-icon>
                 </v-btn>
             </div>
         </v-list-item-action>
@@ -44,7 +51,10 @@
         },
         methods: {
             getIdProject: function () {
-                alert(this.projectId +'//' +this.projectStatus);
+                alert(this.$store.state.projects.find(project => project.id === this.projectId).id +'//' + this.$store.state.projects.find(project => project.id === this.projectId).status_id);
+            },
+            changeStatus: function () {
+                this.$store.dispatch('changeProjectStatus', this.projectId);
             }
         }
     }

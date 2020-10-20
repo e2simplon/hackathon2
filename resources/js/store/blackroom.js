@@ -26,6 +26,10 @@ export default new Vuex.Store({
         snackMessage(state, payload) {
             state.snack = payload;
         },
+        changeProjectStatus(state, payload) {
+            const project = state.projects.find(item => item.id === payload);
+            project.status_id = 2;
+        }
     },
     actions: {
         setSpots({commit}, payload) {
@@ -137,6 +141,9 @@ export default new Vuex.Store({
                     commit("snackMessage", {color:"success", text:"Projet ajouté", status: true});
                 }).catch(error => {
             });
+        },
+        changeProjectStatus ({commit}, payload) {
+            commit("changeProjectStatus", payload);
         },
     }
 })

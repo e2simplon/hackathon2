@@ -171,7 +171,7 @@
                                 <v-icon>build_circle</v-icon>
                             </v-list-item-icon>
                             <v-list-item-content>
-                                <v-list-item-title> <strong> {{ project.name }} </strong>
+                                <v-list-item-title> <strong>{{ project.name }}</strong>
                                     <v-chip
                                         class="ma-2"
                                         color="pink"
