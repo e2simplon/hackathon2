@@ -1,7 +1,6 @@
 <template>
     <v-list-item
-        :key="projectId + '-project'"
-    >
+        :key="projectId + '-project'">
         <v-list-item-icon>
             <v-icon large>build_circle</v-icon>
         </v-list-item-icon>
@@ -19,15 +18,31 @@
                 >
                     <strong> 0 / 10</strong>
                 </v-chip>&nbsp;&nbsp;&nbsp;
-                <v-btn fab large class="mx-2" color="gray" :disabled="pendingAction"  :style="[projectStatus === 1 ? {'background-color':'#c90f54 !important'}: {}]">
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                <v-btn fab large class="mx-2" v-bind="attrs"
+                       v-on="on" color="gray" :disabled="pendingAction"  :style="[projectStatus === 1 ? {'background-color':'#c90f54 !important'}: {}]">
                     <v-icon>schedule</v-icon>
-                </v-btn>
-                <v-btn @click="changeStatusOpen()" fab large class="mx-2" color="gray"  :disabled="openAction"  :style="[projectStatus === 2 ? {'background-color':'#c90f54 !important'}: {}]">
+                </v-btn></template>
+                        <span>En attente</span>
+                </v-tooltip>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                <v-btn @click="changeStatusOpen()" v-bind="attrs"
+                       v-on="on" fab large class="mx-2" color="gray"  :disabled="openAction"  :style="[projectStatus === 2 ? {'background-color':'#c90f54 !important'}: {}]">
                     <v-icon>how_to_vote</v-icon>
-                </v-btn>
-                <v-btn @click="changeStatusClosed()" fab large class="mx-2" color="gray" :disabled="closedAction"  :style="[projectStatus === 3 ? {'background-color':'#c90f54 !important'}: {}]">
+                </v-btn></template>
+                        <span>Activer la notation</span>
+                </v-tooltip>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                <v-btn @click="changeStatusClosed()" v-bind="attrs"
+                       v-on="on" fab large class="mx-2" color="gray" :disabled="closedAction"  :style="[projectStatus === 3 ? {'background-color':'#c90f54 !important'}: {}]">
                     <v-icon>cancel</v-icon>
                 </v-btn>
+                    </template>
+                    <span>Fermer la notation</span>
+                </v-tooltip>
             </div>
         </v-list-item-action>
 
@@ -83,10 +98,5 @@
 </script>
 
 <style>
-    .disable-events {
-        pointer-events: none
-    }
-    .disableColored {
-        background-color: #c90f54 !important;
-    }
+
 </style>
