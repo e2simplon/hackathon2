@@ -7,7 +7,7 @@
         </v-list-item-icon>
         <v-list-item-content>
             <v-list-item-title>
-              <strong> {{ projectName }} </strong>
+                <strong> {{ projectName }} </strong>
 
             </v-list-item-title>
         </v-list-item-content>
@@ -17,16 +17,16 @@
                     color="#c90f54"
                     text-color="white"
                 >
-                   <strong> 0 / 10</strong>
+                    <strong> 0 / 10</strong>
                 </v-chip>&nbsp;&nbsp;&nbsp;
-                <v-btn @click="getIdProject()" fab large class="mx-2">
-                    <v-icon color="grey lighten-1">schedule</v-icon>
+                <v-btn fab large class="mx-2" color="gray" :disabled="pendingAction"  :style="[projectStatus === 1 ? {'background-color':'#c90f54 !important'}: {}]">
+                    <v-icon>schedule</v-icon>
                 </v-btn>
-                <v-btn @click="changeStatus()" fab large class="mx-2">
-                    <v-icon color="grey lighten-1">how_to_vote</v-icon>
+                <v-btn @click="changeStatusOpen()" fab large class="mx-2" color="gray"  :disabled="openAction"  :style="[projectStatus === 2 ? {'background-color':'#c90f54 !important'}: {}]">
+                    <v-icon>how_to_vote</v-icon>
                 </v-btn>
-                <v-btn @click="" fab large class="mx-2">
-                    <v-icon color="grey lighten-1">cancel</v-icon>
+                <v-btn @click="changeStatusClosed()" fab large class="mx-2" color="gray" :disabled="closedAction"  :style="[projectStatus === 3 ? {'background-color':'#c90f54 !important'}: {}]">
+                    <v-icon>cancel</v-icon>
                 </v-btn>
             </div>
         </v-list-item-action>
@@ -41,7 +41,11 @@
         data: function () {
             return {
                 projectName: "",
-                projectStatus: "",
+                projectStatus: 1,
+                pendingAction: true,
+                openAction: false,
+                closedAction: true,
+
             }
         },
         created: function () {
@@ -50,16 +54,39 @@
             this.projectStatus = projectData.status_id;
         },
         methods: {
-            getIdProject: function () {
-                alert(this.$store.state.projects.find(project => project.id === this.projectId).id +'//' + this.$store.state.projects.find(project => project.id === this.projectId).status_id);
+            changeStatusOpen: function () {
+                this.projectStatus = 2;
             },
-            changeStatus: function () {
-                this.$store.dispatch('changeProjectStatus', this.projectId);
+
+            changeStatusClosed: function () {
+                this.projectStatus = 3;
+            }
+        }
+        ,
+        watch: {
+            projectStatus: function () {
+                switch (this.projectStatus) {
+                    case 2:
+                        this.pendingAction = true;
+                        this.openAction = true;
+                        this.closedAction = false;
+                        break;
+                    case 3:
+                        this.pendingAction = true;
+                        this.openAction = true;
+                        this.closedAction = true;
+                        break;
+                }
             }
         }
     }
 </script>
 
 <style>
-
+    .disable-events {
+        pointer-events: none
+    }
+    .disableColored {
+        background-color: #c90f54 !important;
+    }
 </style>

@@ -8,7 +8,7 @@
             <v-card-title>
                 <v-icon x-large
                         color="black">
-                    account_balance
+                    schedule
                 </v-icon>
                 &nbsp;Plateau QUAI ALPHA
             </v-card-title>

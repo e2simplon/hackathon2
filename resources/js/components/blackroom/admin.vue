@@ -21,24 +21,19 @@
             >
                 <div><img src="/img/logo-qa-white.svg" width="250" style="margin-bottom:30px;">
                 </div>
-                <v-subheader><strong>EVENEMENTS</strong></v-subheader>
                 <v-list-item-group
                     active-class=" text--accent-4"
                 >
+                    <v-subheader><strong>EVENEMENTS</strong></v-subheader>
                     <v-divider></v-divider>
                     <v-list-item @click="goToRoute('projectsStatus')">
                         <v-list-item-icon>
-                            <v-icon>account_box</v-icon>
+                            <v-icon>schedule</v-icon>
                         </v-list-item-icon>
                         <v-list-item-title><strong>STATUS DES PROJETS</strong></v-list-item-title>
                     </v-list-item>
 
-
-                </v-list-item-group>
-                <v-subheader><strong>GESTION</strong></v-subheader>
-                <v-list-item-group
-                    active-class=" text--accent-4"
-                >
+                    <v-subheader><strong>GESTION</strong></v-subheader>
                     <v-divider></v-divider>
                     <v-list-item @click="goToRoute('users')">
                         <v-list-item-icon>
